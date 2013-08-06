@@ -1,5 +1,10 @@
 public class Board {
 
+	//The characteers available to play
+	public enum Character {
+		Jack_Mustard, Kassandra_Scarlett, Diana_White, Jacob_Green, Eleanor_Peacock, Victor_Plum
+	}
+
 	public Board() {
 
 	}
