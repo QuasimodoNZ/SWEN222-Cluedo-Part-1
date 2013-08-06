@@ -8,4 +8,10 @@ public class Player {
 	public Character getCharacter(){
 		return character;
 	}
+	
+	public String presentOptions(String options){
+		//TODO Finish Method
+		String option = null;
+		return option;
+	}
 }

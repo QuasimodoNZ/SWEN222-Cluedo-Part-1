@@ -6,7 +6,7 @@ public class Game {
 
 		// Ask for number of players
 		// Create all players, list of players?
-		Player player = new Player();
+		Player player = new Player("Jack Mustard");
 
 		// While dice roll is zero or more (must include zero as they can still
 		// accuse)
