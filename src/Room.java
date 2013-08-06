@@ -1,8 +1,7 @@
-
 public class Room {
 	private String name;
-	
-	public Room(){
-		
+
+	public Room() {
+
 	}
 }
