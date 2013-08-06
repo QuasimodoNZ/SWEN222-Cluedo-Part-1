@@ -11,9 +11,11 @@ public class Game {
 		
 		//While dice roll is zero or more (must include zero as they can still accuse)
 		
-		board.getOptions(); // Gets all potential options for the player
+		String options = board.getOptions(); // Gets all potential options for the player
 		
-		player.presentOptions(); // Presents all the options to the player
+		String selctedOption = player.presentOptions(options); // Presents all the options to the player
+		
+		play(selectedOption); // Makes the selected play
 		
 		
 	}
