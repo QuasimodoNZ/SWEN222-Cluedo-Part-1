@@ -2,7 +2,8 @@
 public class Game {
 	private String name;
 	public Game(){
-		name = "should be the 3rd commit";
+		name = "alex's commit";
+		
 	}
 	
 	public static void main(String[] args) {
