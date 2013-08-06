@@ -31,14 +31,24 @@ public class Board {
 	}
 
 	public Board() {
-		// Ask for number of players
+		// Asks user for the number of players
 		System.out.println("Welcome to Cludo");
 		System.out.println("Please enter the number of players (3-6)");
 		Scanner inputReader = new Scanner(System.in);
+		
+		// Checks for valid input
 		if (inputReader.hasNextInt()) {
 			int num = inputReader.nextInt();
+			// Checks for a valid number
 			if (3 <= num && num <= 6) {
-
+				// Links players to characters
+				while (num > 0){
+					System.out.println("Enter Player "+num+"'s character:");
+					String name = inputReader.next();
+					if (validCharacter(name) && unselected(name)){
+						
+					}
+				}
 			} else {
 				System.out.println("Invalid number of players");
 			}
