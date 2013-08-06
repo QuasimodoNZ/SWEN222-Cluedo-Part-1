@@ -4,7 +4,30 @@ public class Board {
 
 	// The characters available to play
 	public enum Character {
-		Jack_Mustard, Kassandra_Scarlett, Diana_White, Jacob_Green, Eleanor_Peacock, Victor_Plum
+		JACK_MUSTARD,
+		KASSANDRA_SCARLETT,
+		DIANA_WHITE,
+		JACOB_GREEN,
+		ELEANOR_PEACOCK,
+		VICTOR_PLUM;
+		
+		public String toString(){
+			switch (this){
+			case JACK_MUSTARD:
+				return "Jack Mustard";
+			case KASSANDRA_SCARLETT:
+				return "Kassandra Scarlett";
+			case DIANA_WHITE:
+				return "Diana White";
+			case JACOB_GREEN:
+				return "Jacob Green";
+			case ELEANOR_PEACOCK:
+				return "Eleanor Peackock";
+			case VICTOR_PLUM:
+				return "Victor Plum";
+			default: throw new IllegalArgumentException();
+			}
+		}
 	}
 
 	public Board() {
