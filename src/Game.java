@@ -2,7 +2,7 @@
 public class Game {
 	private String name;
 	public Game(){
-		name = "test";
+		name = "should be the 3rd commit";
 	}
 	
 	public static void main(String[] args) {
