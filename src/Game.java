@@ -15,5 +15,9 @@ public class Game {
 		// TODO Auto-generated method stub
 		Game obj = new Game();
 	}
+	
+	public void hello(){
+		System.out.println("Hello");
+	}
 
 }
