@@ -2,7 +2,7 @@
 public class Game {
 	private String name;
 	public Game(){
-		name = "alex's commit";
+		name = "alex's commit number 2";
 		
 	}
 	
