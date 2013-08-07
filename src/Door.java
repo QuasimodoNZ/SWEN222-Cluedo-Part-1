@@ -44,6 +44,7 @@ public class Door {
 	/**
 	 * returns the name of the door
 	 */
+	@Override
 	public String toString() {
 		return name;
 	}

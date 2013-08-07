@@ -70,6 +70,10 @@ public class Location {
 		return doors;
 	}
 
+	/**
+	 * This is what will be drawn on board at this locations grid point
+	 */
+	@Override
 	public String toString() {
 		if (character != null)
 			return "" + character.toString().charAt(0);
