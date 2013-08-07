@@ -2,17 +2,90 @@ import java.util.*;
 
 public class Board {
 
+	// The possible murder weapons
+	public enum Weapon {
+		ROPE, CANDLESTICK, KNIFE, PISTOL, BASEBALL_BAT, DUMBBELL, TROPHY, POISON, AXE;
+		@Override
+		public String toString() {
+			switch (this) {
+			case ROPE:
+				return "Rope";
+			case CANDLESTICK:
+				return "Candlestick";
+			case KNIFE:
+				return "Knife";
+			case PISTOL:
+				return "Pistol";
+			case BASEBALL_BAT:
+				return "Baseball Bat";
+			case DUMBBELL:
+				return "Dumbbell";
+			case TROPHY:
+				return "Trophy";
+			case POISON:
+				return "Posion";
+			case AXE:
+				return "Axe";
+			default:
+				throw new IllegalArgumentException();
+			}
+		}
+
+		/**
+		 * Returns all the possible values of Board.RoomName as a list.
+		 * 
+		 * @return List<Weapon>
+		 */
+		public List<Weapon> toList() {
+			return Arrays.asList(Weapon.values());
+		}
+	}
+
+	// The Rooms in the game
+	public enum RoomName {
+		SPA, THEATRE, LIVING_ROOM, OBSERVATORY, PATIO, SWIMMING_POOL, HALL, KITCHEN, DINING_ROOM, GUEST_HOUSE;
+		@Override
+		public String toString() {
+			switch (this) {
+			case SPA:
+				return "Spa";
+			case THEATRE:
+				return "Theatre";
+			case OBSERVATORY:
+				return "Observatory";
+			case PATIO:
+				return "Patio";
+			case SWIMMING_POOL:
+				return "Swimming Pool";
+			case HALL:
+				return "Hall";
+			case KITCHEN:
+				return "Kitchen";
+			case DINING_ROOM:
+				return "Dining Room";
+			case GUEST_HOUSE:
+				return "Guest House";
+			default:
+				throw new IllegalArgumentException();
+			}
+		}
+
+		/**
+		 * Returns all the possible values of Board.RoomName as a list.
+		 * 
+		 * @return List<RoomName>
+		 */
+		public List<RoomName> toList() {
+			return Arrays.asList(RoomName.values());
+		}
+	}
+
 	// The characters available to play
 	public enum Character {
-		JACK_MUSTARD,
-		KASSANDRA_SCARLETT,
-		DIANA_WHITE,
-		JACOB_GREEN,
-		ELEANOR_PEACOCK,
-		VICTOR_PLUM;
-		
-		public String toString(){
-			switch (this){
+		JACK_MUSTARD, KASSANDRA_SCARLETT, DIANA_WHITE, JACOB_GREEN, ELEANOR_PEACOCK, VICTOR_PLUM;
+		@Override
+		public String toString() {
+			switch (this) {
 			case JACK_MUSTARD:
 				return "Jack Mustard";
 			case KASSANDRA_SCARLETT:
@@ -25,8 +98,18 @@ public class Board {
 				return "Eleanor Peackock";
 			case VICTOR_PLUM:
 				return "Victor Plum";
-			default: throw new IllegalArgumentException();
+			default:
+				throw new IllegalArgumentException();
 			}
+		}
+
+		/**
+		 * Returns all the possible values of Board.Character as a list.
+		 * 
+		 * @return List<Character>
+		 */
+		public List<Character> toList() {
+			return Arrays.asList(Character.values());
 		}
 	}
 
@@ -35,18 +118,18 @@ public class Board {
 		System.out.println("Welcome to Cludo");
 		System.out.println("Please enter the number of players (3-6)");
 		Scanner inputReader = new Scanner(System.in);
-		
+
 		// Checks for valid input
 		if (inputReader.hasNextInt()) {
 			int num = inputReader.nextInt();
 			// Checks for a valid number
 			if (3 <= num && num <= 6) {
 				// Links players to characters
-				while (num > 0){
-					System.out.println("Enter Player "+num+"'s character:");
+				while (num > 0) {
+					System.out.println("Enter Player " + num + "'s character:");
 					String name = inputReader.next();
-					if (validCharacter(name) && unselected(name)){
-						
+					if (validCharacter(name) && unselected(name)) {
+
 					}
 				}
 			} else {
