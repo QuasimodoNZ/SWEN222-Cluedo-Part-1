@@ -2,11 +2,8 @@ import java.util.*;
 
 public class Board {
 	private List<Player> players;
-	private List<Weapon> weaponCards;
 	private Weapon weaponSolution;
-	private List<RoomName> roomCards;
 	private RoomName roomSolution;
-	private List<Character> characterCards;
 	private Character characterSolution;
 
 	// The possible murder weapons
@@ -43,7 +40,7 @@ public class Board {
 		 * 
 		 * @return List<Weapon>
 		 */
-		public List<Weapon> toList() {
+		public static List<Weapon> toList() {
 			return Arrays.asList(Weapon.values());
 		}
 	}
@@ -82,7 +79,7 @@ public class Board {
 		 * 
 		 * @return List<RoomName>
 		 */
-		public List<RoomName> toList() {
+		public static List<RoomName> toList() {
 			return Arrays.asList(RoomName.values());
 		}
 	}
@@ -158,9 +155,13 @@ public class Board {
 	 */
 	public Board() {
 		players = new LinkedList<Player>();
-		weaponCards = new LinkedList<Weapon>();
-		roomCards = new LinkedList<RoomName>();
-		characterCards = new LinkedList<Character>();
+		List<Weapon> weaponCards = Weapon.toList();
+		List<RoomName> roomCards = RoomName.toList();
+		List<Character> characterCards = Character.toList();
+
+		Collections.shuffle(weaponCards);
+		Collections.shuffle(roomCards);
+		Collections.shuffle(characterCards);
 
 		// Asks user for the number of players
 		System.out.println("Welcome to Cludo");
