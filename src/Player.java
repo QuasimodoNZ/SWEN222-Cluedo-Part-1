@@ -3,7 +3,7 @@ public class Player {
 
 	public Player(Board.Character character) {
 		this.character = character;
-		
+
 	}
 
 	public Board.Character getCharacter() {

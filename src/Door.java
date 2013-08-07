@@ -1,6 +1,7 @@
 import java.util.LinkedList;
+
 import java.util.List;
-// Can you see this?
+
 public class Door {
 	private String name;
 	private List<Location> firstList;
