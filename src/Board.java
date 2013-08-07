@@ -219,7 +219,7 @@ public class Board {
 				while (movesLeft > 0) {
 					System.out.println(getOptions(player));
 					if (inputReader.hasNext()) {
-						playTurn(player, inputReader.next());
+						movesLeft -= playTurn(player, inputReader.next());
 					}
 				}
 			}
@@ -227,9 +227,9 @@ public class Board {
 		inputReader.close();
 	}
 
-	private void playTurn(Player player, String next) {
+	private int playTurn(Player player, String next) {
 		// TODO Auto-generated method stub
-
+		return 0;
 	}
 
 	public static void main(String[] args) {
