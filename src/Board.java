@@ -208,6 +208,9 @@ public class Board {
 		return options;
 	}
 
+	/**
+	 * runs a game untill a player wins
+	 */
 	public void playGame() {
 		Scanner inputReader = new Scanner(System.in);
 		while (players.size() > 1) {
