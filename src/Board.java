@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Board {
-
+	private List<Player> players;
 	// The possible murder weapons
 	public enum Weapon {
 		ROPE, CANDLESTICK, KNIFE, PISTOL, BASEBALL_BAT, DUMBBELL, TROPHY, POISON, AXE;
@@ -112,7 +112,7 @@ public class Board {
 			return Arrays.asList(Character.values());
 		}
 
-		public static Character toEnum(String name) {
+		public static Character toEnum(String name) throws IllegalArgumentException{
 			switch (name) {
 			case "kasandra scarlett":
 				return Character.KASSANDRA_SCARLETT;
@@ -130,9 +130,24 @@ public class Board {
 				throw new IllegalArgumentException();
 			}
 		}
+		
+	}
+	
+	/**
+	 * Checks all of the players to see if they already have that Character
+	 */
+	public boolean unselected(Character character){
+		for (Player p : players){
+			if (p.getCharacter().equals(character)){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public Board() {
+		players = new LinkedList<Player>();
+		
 		// Asks user for the number of players
 		System.out.println("Welcome to Cludo");
 		System.out.println("Please enter the number of players (3-6)");
@@ -147,10 +162,16 @@ public class Board {
 				while (num > 0) {
 					System.out.println("Enter Player " + num + "'s character:");
 					String name = inputReader.next().toLowerCase();
-					if (Character.toList().contains(Character.toEnum(name))
-							&& unselected(name)) {
-
+					try{
+						Character character = Character.toEnum(name);
+						if (unselected(character)) {
+							Player p = new Player(character);
+							players.add(p);
+						}
+					} catch (IllegalArgumentException e){
+						System.out.println("Invalid Character Name");
 					}
+					
 				}
 			} else {
 				System.out.println("Invalid number of players");
@@ -180,7 +201,7 @@ public class Board {
 
 	public String getOptions(Player player) {
 		// Gets the location of the current players character
-		Location location = player.getCharacter().getLocation();
+		Location location = player.getLocation();
 
 		// Computes options of that location
 

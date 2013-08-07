@@ -1,16 +1,16 @@
 public class Player {
-	private Character character;
-	
-	public Player(String character){
-		this.character = new Character(character);
+	private Board.Character character;
+
+	public Player(Board.Character character) {
+		this.character = character;
 	}
-	
-	public Character getCharacter(){
+
+	public Board.Character getCharacter() {
 		return character;
 	}
-	
-	public String presentOptions(String options){
-		//TODO Finish Method
+
+	public String presentOptions(String options) {
+		// TODO Finish Method
 		String option = null;
 		return option;
 	}
