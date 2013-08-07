@@ -182,21 +182,6 @@ public class Board {
 			System.out.println("Invalid input");
 		}
 
-		// While dice roll is zero or more (must include zero as they can still
-		// accuse)
-
-		// Gets all potential options for the player
-		String options = getOptions(player);
-
-		// Presents all the options to the player
-		while (true) {
-			String selectedOption = player.presentOptions(options);
-
-			if (play(selectedOption)) {
-				System.out.println("Successful Play");
-				break;
-			}
-		}
 	}
 
 	public String getOptions(Player player) {
@@ -218,11 +203,27 @@ public class Board {
 	 *            option requested
 	 * @return True if successful, false otherwise
 	 */
-	public boolean play(String option) {
-		return true;
+	public void playGame() {
+		// // While dice roll is zero or more (must include zero as they can
+		// still
+		// // accuse)
+		//
+		// // Gets all potential options for the player
+		// String options = getOptions(player);
+		//
+		// // Presents all the options to the player
+		// while (true) {
+		// String selectedOption = player.presentOptions(options);
+		//
+		// if (play(selectedOption)) {
+		// System.out.println("Successful Play");
+		// break;
+		// }
+		// }
 	}
 
 	public static void main(String[] args) {
 		Board board = new Board();
+		board.playGame();
 	}
 }
