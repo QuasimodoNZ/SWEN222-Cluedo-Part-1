@@ -140,9 +140,7 @@ public class Board {
 
 	}
 
-	/**
-	 * Checks all of the players to see if they already have that Character
-	 */
+	// Checks all of the players to see if they already have that Character
 	public boolean unselected(Character character) {
 		for (Player p : players) {
 			if (p.getCharacter().equals(character)) {
@@ -165,6 +163,32 @@ public class Board {
 		Collections.shuffle(weaponCards);
 		Collections.shuffle(roomCards);
 		Collections.shuffle(characterCards);
+
+		weaponSolution = weaponCards.get(0);
+		roomSolution = roomCards.get(0);
+		characterSolution = characterCards.get(0);
+
+		// Loops through all the players adding cards until all the lists are
+		// empty
+		int i = 0;
+		while (true) {
+			if (i > players.size() - 1) {
+				i = 0;
+			}
+			if (!weaponCards.isEmpty()) {
+				players.get(i).getWeaponCards().add(weaponCards.get(0));
+				i++;
+			} else if (!roomCards.isEmpty()) {
+				players.get(i).getRoomCards().add(roomCards.get(0));
+				i++;
+			} else if (!characterCards.isEmpty()) {
+				players.get(i).getCharacterCards().add(characterCards.get(0));
+				i++;
+			} else {
+				System.out.println("Cards dealt");
+				break;
+			}
+		}
 
 		// Asks user for the number of players
 		System.out.println("Welcome to Cludo");
@@ -222,7 +246,8 @@ public class Board {
 				int movesLeft = 1 + (int) (Math.random() * 12);
 				while (movesLeft > 0) {
 					System.out.println(getOptions(player));
-					if (inputReader.hasNext()) {//needs to check outcome of an accuse
+					if (inputReader.hasNext()) {// needs to check outcome of an
+												// accuse
 						movesLeft -= playTurn(player, inputReader.next());
 					}
 				}
@@ -300,7 +325,8 @@ public class Board {
 			// outcome for playGame() to deal with
 		}
 		if (move.startsWith("suggest")) {
-			//compare every players hand with the suggestion and if found, print out that it has been
+			// compare every players hand with the suggestion and if found,
+			// print out that it has been
 			return 12;
 		}
 		System.out

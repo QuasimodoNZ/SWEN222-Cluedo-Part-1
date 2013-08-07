@@ -1,9 +1,17 @@
+import java.util.*;
+
 public class Player {
 	private Board.Character character;
 	private Location location;
+	private List<Board.Weapon> weaponCards;
+	private List<Board.RoomName> roomCards;
+	private List<Board.Character> characterCards;
 
 	public Player(Board.Character character) {
 		this.character = character;
+		this.weaponCards = new LinkedList<Board.Weapon>();
+		this.roomCards = new LinkedList<Board.RoomName>();
+		this.characterCards = new LinkedList<Board.Character>();
 
 	}
 
@@ -18,6 +26,18 @@ public class Player {
 
 	public Board.Character getCharacter() {
 		return character;
+	}
+
+	public List<Board.Weapon> getWeaponCards() {
+		return weaponCards;
+	}
+
+	public List<Board.RoomName> getRoomCards() {
+		return roomCards;
+	}
+
+	public List<Board.Character> getCharacterCards() {
+		return characterCards;
 	}
 
 	public String presentOptions(String options) {
