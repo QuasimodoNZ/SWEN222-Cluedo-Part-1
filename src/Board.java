@@ -198,9 +198,7 @@ public class Board {
 
 	/**
 	 * Makes the requested play, returns true if successful
-	 * 
-	 * @param The
-	 *            option requested
+	 * @param The option requested        
 	 * @return True if successful, false otherwise
 	 */
 	public void playGame() {
