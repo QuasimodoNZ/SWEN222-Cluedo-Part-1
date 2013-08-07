@@ -8,7 +8,6 @@ public class Board {
 	private RoomName roomSolution;
 	private List<Character> characterCards;
 	private Character characterSolution;
-	
 
 	// The possible murder weapons
 	public enum Weapon {
@@ -155,14 +154,13 @@ public class Board {
 	}
 
 	/**
-	 ***********  Board Constructor  ***********
+	 *********** Board Constructor ***********
 	 */
 	public Board() {
 		players = new LinkedList<Player>();
 		weaponCards = new LinkedList<Weapon>();
 		roomCards = new LinkedList<RoomName>();
 		characterCards = new LinkedList<Character>();
-		
 
 		// Asks user for the number of players
 		System.out.println("Welcome to Cludo");
@@ -197,7 +195,7 @@ public class Board {
 		}
 		inputReader.close();
 	}
-	
+
 	public String getOptions(Player player) {
 		// Gets the location of the current players character
 		// Location location = player.getLocation();
@@ -210,23 +208,14 @@ public class Board {
 		return options;
 	}
 
-<<<<<<< HEAD
-	
-=======
-	/**
-	 * Makes the requested play, returns true if successful
-	 * @param The option requested        
-	 * @return True if successful, false otherwise
-	 */
->>>>>>> 22aff00ce923746f3f659a782460f06b62eaa7c8
 	public void playGame() {
 		Scanner inputReader = new Scanner(System.in);
-		while(players.size()>1){
-			for(Player player : players){
-				int movesLeft = 1 + (int)(Math.random() * 12);
-				while(movesLeft>0){
+		while (players.size() > 1) {
+			for (Player player : players) {
+				int movesLeft = 1 + (int) (Math.random() * 12);
+				while (movesLeft > 0) {
 					System.out.println(getOptions(player));
-					if(inputReader.hasNext()){
+					if (inputReader.hasNext()) {
 						playTurn(player, inputReader.next());
 					}
 				}
@@ -237,7 +226,7 @@ public class Board {
 
 	private void playTurn(Player player, String next) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	public static void main(String[] args) {
