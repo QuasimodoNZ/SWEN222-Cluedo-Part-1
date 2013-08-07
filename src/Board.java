@@ -209,7 +209,7 @@ public class Board {
 	}
 
 	/**
-	 * runs a game untill a player wins
+	 * runs a game until a player wins
 	 */
 	public void playGame() {
 		Scanner inputReader = new Scanner(System.in);
