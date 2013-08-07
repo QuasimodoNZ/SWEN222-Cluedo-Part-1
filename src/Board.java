@@ -164,9 +164,9 @@ public class Board {
 		Collections.shuffle(roomCards);
 		Collections.shuffle(characterCards);
 
-		weaponSolution = weaponCards.get(0);
-		roomSolution = roomCards.get(0);
-		characterSolution = characterCards.get(0);
+		weaponSolution = weaponCards.remove(0);
+		roomSolution = roomCards.remove(0);
+		characterSolution = characterCards.remove(0);
 
 		// Loops through all the players adding cards until all the lists are
 		// empty
@@ -176,13 +176,13 @@ public class Board {
 				i = 0;
 			}
 			if (!weaponCards.isEmpty()) {
-				players.get(i).getWeaponCards().add(weaponCards.get(0));
+				players.get(i).getWeaponCards().add(weaponCards.remove(0));
 				i++;
 			} else if (!roomCards.isEmpty()) {
-				players.get(i).getRoomCards().add(roomCards.get(0));
+				players.get(i).getRoomCards().add(roomCards.remove(0));
 				i++;
 			} else if (!characterCards.isEmpty()) {
-				players.get(i).getCharacterCards().add(characterCards.get(0));
+				players.get(i).getCharacterCards().add(characterCards.remove(0));
 				i++;
 			} else {
 				System.out.println("Cards dealt");
