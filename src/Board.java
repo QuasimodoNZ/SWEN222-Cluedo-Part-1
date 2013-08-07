@@ -2,6 +2,13 @@ import java.util.*;
 
 public class Board {
 	private List<Player> players;
+	private List<Weapon> weaponCards;
+	private Weapon weaponSolution;
+	private List<RoomName> roomCards;
+	private RoomName roomSolution;
+	private List<Character> characterCards;
+	private Character characterSolution;
+	
 
 	// The possible murder weapons
 	public enum Weapon {
@@ -147,8 +154,15 @@ public class Board {
 		return true;
 	}
 
+	/**
+	 ***********  Board Constructor  ***********
+	 */
 	public Board() {
 		players = new LinkedList<Player>();
+		weaponCards = new LinkedList<Weapon>();
+		roomCards = new LinkedList<RoomName>();
+		characterCards = new LinkedList<Character>();
+		
 
 		// Asks user for the number of players
 		System.out.println("Welcome to Cludo");
@@ -183,7 +197,7 @@ public class Board {
 		}
 
 	}
-
+	
 	public String getOptions(Player player) {
 		// Gets the location of the current players character
 		// Location location = player.getLocation();
