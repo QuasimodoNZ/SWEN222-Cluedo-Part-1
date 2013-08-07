@@ -55,6 +55,13 @@ public class Location {
 	}
 
 	/**
+	 * Gives this location access to the door that is passed in
+	 */
+	public void addDoor(Door d) {
+		doors.add(d);
+	}
+
+	/**
 	 * Returns a list of doors that the location has access to.
 	 * 
 	 * @return
