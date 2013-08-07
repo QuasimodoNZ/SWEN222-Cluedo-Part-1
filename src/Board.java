@@ -1,6 +1,8 @@
+import java.awt.Point;
 import java.util.*;
 
 public class Board {
+	private Location[][] locations;
 	private List<Player> players;
 	private Weapon weaponSolution;
 	private RoomName roomSolution;
@@ -154,6 +156,7 @@ public class Board {
 	 *********** Board Constructor ***********
 	 */
 	public Board() {
+		locations = new Location[25][25];
 		players = new LinkedList<Player>();
 		List<Weapon> weaponCards = Weapon.toList();
 		List<RoomName> roomCards = RoomName.toList();
@@ -210,7 +213,7 @@ public class Board {
 	}
 
 	/**
-	 * runs a game until a player wins
+	 * Runs a game until a player wins
 	 */
 	public void playGame() {
 		Scanner inputReader = new Scanner(System.in);
@@ -219,7 +222,7 @@ public class Board {
 				int movesLeft = 1 + (int) (Math.random() * 12);
 				while (movesLeft > 0) {
 					System.out.println(getOptions(player));
-					if (inputReader.hasNext()) {
+					if (inputReader.hasNext()) {//needs to check outcome of an accuse
 						movesLeft -= playTurn(player, inputReader.next());
 					}
 				}
@@ -228,8 +231,80 @@ public class Board {
 		inputReader.close();
 	}
 
-	private int playTurn(Player player, String next) {
-		// TODO Auto-generated method stub
+	/**
+	 * Returns the location that is in the spot next to the player in specified
+	 * by the direction
+	 * 
+	 * @param player
+	 * @param direction
+	 * @return
+	 */
+	private Location move(Player player, String direction) {
+		Point point = player.getLocation().getPoint();
+
+		// returns the location in the direction specified
+		switch (direction) {
+		case "north":
+			if (point.y == 0)
+				return null;
+			return locations[point.x][point.y - 1];
+		case "south":
+			if (point.y == 24)
+				return null;
+			return locations[point.x][point.y + 1];
+		case "east":
+			if (point.x == 24)
+				return null;
+			return locations[point.x + 1][point.y];
+		case "west":
+			if (point.x == 0)
+				return null;
+			return locations[point.x - 1][point.y];
+		default:
+			return null;
+		}
+
+	}
+
+	/**
+	 * Executes the move specified by the player
+	 * <p>
+	 * returns 1 if the move is moving a step or going through a door or passage
+	 * <p>
+	 * returns 0 if the move is invalid and will usually print out a reason why
+	 * <p>
+	 * returns 12 if the player executes a suggestion or an accusation
+	 * 
+	 * @param player
+	 * @param move
+	 * @return
+	 */
+	private int playTurn(Player player, String move) {
+		if (move.startsWith("move")) {
+			Location nextLocation = move(player, move.substring(5).trim());
+			if (nextLocation != null) {
+				player.moveLocation(nextLocation);
+				return 1;
+			}
+		}
+		if (move.startsWith("door")) {
+			return 1;
+			// get availabe doors and compare selection
+			// if available initiate player.moveLocation( other rooms possible
+			// location)
+			// else print out that door is not available
+		}
+		if (move.startsWith("accuse")) {
+			return 12;
+			// checks if the player has won, return a special integer based on
+			// outcome for playGame() to deal with
+		}
+		if (move.startsWith("suggest")) {
+			//compare every players hand with the suggestion and if found, print out that it has been
+			return 12;
+		}
+		System.out
+				.println("That is an invalid move. Your available moves are:\n");
 		return 0;
 	}
 
