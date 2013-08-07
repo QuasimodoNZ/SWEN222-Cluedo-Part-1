@@ -108,8 +108,27 @@ public class Board {
 		 * 
 		 * @return List<Character>
 		 */
-		public List<Character> toList() {
+		public static List<Character> toList() {
 			return Arrays.asList(Character.values());
+		}
+
+		public static Character toEnum(String name) {
+			switch (name) {
+			case "kasandra scarlett":
+				return Character.KASSANDRA_SCARLETT;
+			case "jack mustard":
+				return Character.JACK_MUSTARD;
+			case "diane white":
+				return Character.DIANA_WHITE;
+			case "jacob white":
+				return Character.JACOB_GREEN;
+			case "eleanor peacock":
+				return Character.ELEANOR_PEACOCK;
+			case "victor plum":
+				return Character.VICTOR_PLUM;
+			default:
+				throw new IllegalArgumentException();
+			}
 		}
 	}
 
@@ -127,8 +146,9 @@ public class Board {
 				// Links players to characters
 				while (num > 0) {
 					System.out.println("Enter Player " + num + "'s character:");
-					String name = inputReader.next();
-					if (validCharacter(name) && unselected(name)) {
+					String name = inputReader.next().toLowerCase();
+					if (Character.toList().contains(Character.toEnum(name))
+							&& unselected(name)) {
 
 					}
 				}
