@@ -259,7 +259,9 @@ public class Board {
 
 	/**
 	 * Returns the location that is in the spot next to the player in specified
-	 * by the direction
+	 * by the direction.
+	 * <p>
+	 * Returns null if that is not an available direction such as off the board.
 	 * 
 	 * @param player
 	 * @param direction
@@ -269,26 +271,28 @@ public class Board {
 		Point point = player.getLocation().getPoint();
 
 		// returns the location in the direction specified
-		switch (direction) {
-		case "north":
+		if (direction.equalsIgnoreCase("north")) {
 			if (point.y == 0)
 				return null;
 			return locations[point.x][point.y - 1];
-		case "south":
+		}
+		if (direction.equalsIgnoreCase("south")) {
 			if (point.y == 24)
 				return null;
 			return locations[point.x][point.y + 1];
-		case "east":
+		}
+		if (direction.equalsIgnoreCase("east")) {
 			if (point.x == 24)
 				return null;
 			return locations[point.x + 1][point.y];
-		case "west":
+		}
+		if (direction.equalsIgnoreCase("west")) {
 			if (point.x == 0)
 				return null;
 			return locations[point.x - 1][point.y];
-		default:
-			return null;
 		}
+
+		return null;
 
 	}
 
@@ -307,18 +311,30 @@ public class Board {
 	 */
 	private int playTurn(Player player, String move) {
 		if (move.startsWith("move")) {
-			Location nextLocation = move(player, move.substring(5).trim());
+			Location nextLocation = move(player, move.substring(4).trim());
 			if (nextLocation != null) {
 				player.moveLocation(nextLocation);
 				return 1;
 			}
+			System.out.println("That move is unavailable");
 		}
 		if (move.startsWith("door")) {
-			return 1;
-			// get availabe doors and compare selection
-			// if available initiate player.moveLocation( other rooms possible
-			// location)
-			// else print out that door is not available
+			for (Door d : player.getLocation().getDoors())
+				if (d.toString().equals(move.substring(4).trim()))
+					if (d.getFirstList().contains(player.getLocation())) {
+						for (Location l : d.getSecondList())
+							if (l.getCharacter() == null) {
+								player.moveLocation(l);
+								return 1;
+							}
+					} else {
+						for (Location l : d.getFirstList())
+							if (l.getCharacter() == null) {
+								player.moveLocation(l);
+								return 1;
+							}
+					}
+			System.out.println("That door is not available");
 		}
 		if (move.startsWith("accuse")) {
 			return 12;
@@ -330,8 +346,7 @@ public class Board {
 			// print out that it has been
 			return 12;
 		}
-		System.out
-				.println("That is an invalid move. Your available moves are:\n");
+		System.out.println("Your available moves are:\n");
 		return 0;
 	}
 
