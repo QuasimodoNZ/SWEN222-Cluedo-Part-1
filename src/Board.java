@@ -182,7 +182,8 @@ public class Board {
 				players.get(i).getRoomCards().add(roomCards.remove(0));
 				i++;
 			} else if (!characterCards.isEmpty()) {
-				players.get(i).getCharacterCards().add(characterCards.remove(0));
+				players.get(i).getCharacterCards()
+						.add(characterCards.remove(0));
 				i++;
 			} else {
 				System.out.println("Cards dealt");
