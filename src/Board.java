@@ -168,29 +168,6 @@ public class Board {
 		roomSolution = roomCards.remove(0);
 		characterSolution = characterCards.remove(0);
 
-		// Loops through all the players adding cards until all the lists are
-		// empty
-		int i = 0;
-		while (true) {
-			if (i > players.size() - 1) {
-				i = 0;
-			}
-			if (!weaponCards.isEmpty()) {
-				players.get(i).getWeaponCards().add(weaponCards.remove(0));
-				i++;
-			} else if (!roomCards.isEmpty()) {
-				players.get(i).getRoomCards().add(roomCards.remove(0));
-				i++;
-			} else if (!characterCards.isEmpty()) {
-				players.get(i).getCharacterCards()
-						.add(characterCards.remove(0));
-				i++;
-			} else {
-				System.out.println("Cards dealt");
-				break;
-			}
-		}
-
 		// Asks user for the number of players
 		System.out.println("Welcome to Cludo");
 		System.out.println("Please enter the number of players (3-6)");
@@ -223,6 +200,29 @@ public class Board {
 			System.out.println("Invalid input");
 		}
 		inputReader.close();
+
+		// Loops through all the players adding cards until all the lists are
+		// empty
+		int i = 0;
+		while (true) {
+			if (i > players.size() - 1) {
+				i = 0;
+			}
+			if (!weaponCards.isEmpty()) {
+				players.get(i).getWeaponCards().add(weaponCards.remove(0));
+				i++;
+			} else if (!roomCards.isEmpty()) {
+				players.get(i).getRoomCards().add(roomCards.remove(0));
+				i++;
+			} else if (!characterCards.isEmpty()) {
+				players.get(i).getCharacterCards()
+						.add(characterCards.remove(0));
+				i++;
+			} else {
+				System.out.println("Cards dealt");
+				break;
+			}
+		}
 	}
 
 	public String getOptions(Player player) {
