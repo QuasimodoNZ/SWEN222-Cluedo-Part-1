@@ -38,12 +38,12 @@ public class Board {
 		}
 
 		/**
-		 * Returns all the possible values of Board.RoomName as a list.
+		 * Returns all the possible values of Board.Weapon as a list.
 		 * 
 		 * @return List<Weapon>
 		 */
 		public static List<Weapon> toList() {
-			return Arrays.asList(Weapon.values());
+			return new LinkedList<Weapon>(Arrays.asList(Weapon.values()));
 		}
 	}
 
@@ -82,7 +82,7 @@ public class Board {
 		 * @return List<RoomName>
 		 */
 		public static List<RoomName> toList() {
-			return Arrays.asList(RoomName.values());
+			return new LinkedList<RoomName>(Arrays.asList(RoomName.values()));
 		}
 	}
 
@@ -115,7 +115,7 @@ public class Board {
 		 * @return List<Character>
 		 */
 		public static List<Character> toList() {
-			return Arrays.asList(Character.values());
+			return new LinkedList<Character>(Arrays.asList(Character.values()));
 		}
 
 		public static Character toEnum(String name)
