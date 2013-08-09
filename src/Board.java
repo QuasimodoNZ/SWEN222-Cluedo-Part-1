@@ -208,7 +208,7 @@ public class Board {
 					try {
 						Character character = Character.toEnum(name);
 						if (unselected(character)) {
-							Player p = new Player(character);
+							Player p = new Player(character, true);
 							players.add(p);
 						}
 					} catch (IllegalArgumentException e) {
@@ -223,6 +223,22 @@ public class Board {
 			System.out.println("Invalid input");
 		}
 		inputReader.close();
+
+		if (players.size() < 6) {
+			// Adds the unused characters
+			boolean match = false;
+			for (Character c : Character.toList()) {
+				for (Player p : players) {
+					if (c.equals(p.getCharacter())) {
+						match = true;
+					}
+				}
+				if (!match) {
+					players.add(new Player(c, false));
+					match = false;
+				}
+			}
+		}
 
 		// Loops through all the players adding cards until all the lists are
 		// empty
@@ -421,8 +437,8 @@ public class Board {
 						}
 					}
 				}
-				
-				//Displays whether the suggestions were refuted or not.
+
+				// Displays whether the suggestions were refuted or not.
 				if (characterRefuted)
 					System.out.printf("Character %s has been refuted\n",
 							suggestedCharacter);
