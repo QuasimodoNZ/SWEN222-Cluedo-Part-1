@@ -411,9 +411,24 @@ public class Board {
 		return 0;
 	}
 
-	public String drawBoard() {
-		// TODO
-		return null;
+	public void drawBoard() {
+		for (int i = 0; i < locations.length; i++) {
+			System.out.print(" _");
+		}
+		System.out.println();
+		for (int y = 0; y < locations.length; y++) {
+			for (int x = 0; x < locations[0].length; x++) {
+				if (x == 0) {
+					System.out.printf("|%s ", locations[x][y].toString());
+				} else if (x == locations.length - 1) {
+					System.out.printf("%s|", locations[x][y].toString());
+				} else {
+					System.out.printf("%s ", locations[x][y].toString());
+				}
+			}
+			System.out.println();
+		}
+		System.out.println();
 	}
 
 	public static void main(String[] args) {
