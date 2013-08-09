@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Location {
 	// Whether this location is in a room.
-	private boolean isRoom;
+	private Room room;
 
 	// Stores the door that is on this location, otherwise null
 	private List<Door> doors;
@@ -16,9 +16,9 @@ public class Location {
 	// needs to be changed back to null when the player moves
 	private Board.Character character;
 
-	public Location(Point p, boolean r) {
+	public Location(Point p, Room r) {
 		point = p;
-		isRoom = r;
+		room = r;
 
 		doors = new LinkedList<Door>();
 	}
@@ -77,11 +77,16 @@ public class Location {
 	public String toString() {
 		if (character != null)
 			return "" + character.toString().charAt(0);
-		else if (isRoom)
+		else if (room !=null)
 			return "R";
 		else if (doors.size() > 0)
 			return "D";
 		else
 			return "H";
+	}
+
+	public Room getRoom() {
+		// TODO Auto-generated method stub
+		return room;
 	}
 }
