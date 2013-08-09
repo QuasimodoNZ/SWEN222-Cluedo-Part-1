@@ -366,7 +366,6 @@ public class Board {
 			// outcome for playGame() to deal with
 		}
 		if (move.startsWith("suggest")) {
-			// TODO
 			BufferedReader input = new BufferedReader(new InputStreamReader(
 					System.in));
 			try {
@@ -383,16 +382,62 @@ public class Board {
 				if (suggestedRoom == null)
 					throw new IllegalArgumentException();
 				for (Player p : players) {
-					if (p.getCharacter() == suggestedCharacter && p.getLocation().getRoom() != suggestedRoom) {
+					if (p.getCharacter() == suggestedCharacter
+							&& p.getLocation().getRoom() != suggestedRoom) {
 						p.moveRoom(suggestedRoom);
 						break;
 					}
 				}
-				for(Player p : players){
-					boolean foundSuggestion = false;
-					//TODO
-						
+
+				// Searchs through every player's hand. If a card is found that
+				// refutes the suggestion then only one card will be displayed
+				// (if the player has another card that can refute the
+				// suggestion it will not be announced)
+				boolean characterRefuted = false;
+				boolean roomRefuted = false;
+				boolean weaponRefuted = false;
+				for (Player p : players) {
+					if (p != player && p.isControlled()) {
+						boolean foundSuggestion = false;
+						if (!characterRefuted
+								&& p.getCharacterCards().contains(
+										suggestedCharacter)) {
+							foundSuggestion = true;
+							characterRefuted = true;
+						}
+						if (!foundSuggestion && !roomRefuted
+								&& p.getRoomCards().contains(suggestedRoom)) {
+							foundSuggestion = true;
+							roomRefuted = true;
+						}
+						if (!foundSuggestion && !weaponRefuted
+								&& p.getWeaponCards().contains(suggestedWeapon)) {
+							weaponRefuted = true;
+						}
+					}
 				}
+				
+				//Displays whether the suggestions were refuted or not.
+				if (characterRefuted)
+					System.out.printf("Character %s has been refuted\n",
+							suggestedCharacter);
+				else
+					System.out.printf("Character %s was not refuted\n",
+							suggestedCharacter);
+
+				if (roomRefuted)
+					System.out.printf("Room %s has been refuted\n",
+							suggestedRoom);
+				else
+					System.out.printf("Room %s was not refuted\n",
+							suggestedRoom);
+
+				if (weaponRefuted)
+					System.out.printf("Weapon %s has been refuted\n",
+							suggestedWeapon);
+				else
+					System.out.printf("Weapon %s was not refuted\n",
+							suggestedWeapon);
 			} catch (IllegalArgumentException e) {
 				System.out
 						.println("Sorry, that is not an option. Maybe you spelt it wrong.");
