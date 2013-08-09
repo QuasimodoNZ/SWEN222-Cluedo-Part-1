@@ -361,6 +361,7 @@ public class Board {
 		}
 		if (move.startsWith("accuse")) {
 			// TODO
+			
 			return 12;
 			// checks if the player has won, return a special integer based on
 			// outcome for playGame() to deal with
@@ -372,9 +373,13 @@ public class Board {
 				// Initates the suggestion
 				// Reads in the
 				System.out.println("Who do you think did it?");
+				for(Character c : Character.toList())
+					System.out.println("\t" + c.toString());
 				Character suggestedCharacter = Character.toEnum(input
 						.readLine());
 				System.out.println("What did they use?");
+				for(Weapon c : Weapon.toList())
+					System.out.println("\t" + c.toString());
 				Weapon suggestedWeapon = Weapon.toEnum(input.readLine());
 				Room suggestedRoom = player.getLocation().getRoom();
 
@@ -438,6 +443,8 @@ public class Board {
 				else
 					System.out.printf("Weapon %s was not refuted\n",
 							suggestedWeapon);
+				//Returns 12 so that the player has no more moves left
+				return 12;
 			} catch (IllegalArgumentException e) {
 				System.out
 						.println("Sorry, that is not an option. Maybe you spelt it wrong.");
@@ -448,9 +455,8 @@ public class Board {
 				e.printStackTrace();
 			}
 
-			// compare every players hand with the suggestion and if found,
-			// print out that it has been
-			return 12;
+			//returns 0 because an exception was thrown on the options selected, granting the player another try
+			return 0;
 		}
 		System.out.println("Your available moves are:\n");
 		return 0;
