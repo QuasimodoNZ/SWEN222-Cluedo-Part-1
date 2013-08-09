@@ -349,17 +349,17 @@ public class Board {
 		System.out.println("Your available moves are:\n");
 		return 0;
 	}
-	
-	public void drawBoard(){
-		for (int i=0; i<locations.length; i++){
+
+	public void drawBoard() {
+		for (int i = 0; i < locations.length; i++) {
 			System.out.print(" _");
 		}
 		System.out.println();
-		for (int y=0; y<locations.length; y++){
-			for (int x=0; x<locations[0].length; x++){
-				if (x==0){
+		for (int y = 0; y < locations.length; y++) {
+			for (int x = 0; x < locations[0].length; x++) {
+				if (x == 0) {
 					System.out.printf("|%s ", locations[x][y].toString());
-				} else if (x==locations.length-1){
+				} else if (x == locations.length - 1) {
 					System.out.printf("%s|", locations[x][y].toString());
 				} else {
 					System.out.printf("%s ", locations[x][y].toString());
