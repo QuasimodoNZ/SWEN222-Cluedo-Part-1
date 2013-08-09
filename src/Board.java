@@ -1,4 +1,7 @@
 import java.awt.Point;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Board {
@@ -44,6 +47,29 @@ public class Board {
 		 */
 		public static List<Weapon> toList() {
 			return new LinkedList<Weapon>(Arrays.asList(Weapon.values()));
+		}
+
+		public static Weapon toEnum(String name) {
+			if (name.equals("rope"))
+				return ROPE;
+			if (name.equals("candlestick"))
+				return CANDLESTICK;
+			if (name.equals("knife"))
+				return KNIFE;
+			if (name.equals("pistol"))
+				return PISTOL;
+			if (name.equals("baseball bat"))
+				return BASEBALL_BAT;
+			if (name.equals("dumbbell"))
+				return DUMBBELL;
+			if (name.equals("trophy"))
+				return TROPHY;
+			if (name.equals("poison"))
+				return POISON;
+			if (name.equals("axe"))
+				return AXE;
+
+			throw new IllegalArgumentException();
 		}
 	}
 
@@ -120,24 +146,21 @@ public class Board {
 
 		public static Character toEnum(String name)
 				throws IllegalArgumentException {
-			switch (name) {
-			case "kasandra scarlett":
+			if (name.equals("kasandra scarlett"))
 				return Character.KASSANDRA_SCARLETT;
-			case "jack mustard":
+			if (name.equals("jack mustard"))
 				return Character.JACK_MUSTARD;
-			case "diane white":
+			if (name.equals("diane white"))
 				return Character.DIANA_WHITE;
-			case "jacob white":
+			if (name.equals("jacob white"))
 				return Character.JACOB_GREEN;
-			case "eleanor peacock":
+			if (name.equals("eleanor peacock"))
 				return Character.ELEANOR_PEACOCK;
-			case "victor plum":
+			if (name.equals("victor plum"))
 				return Character.VICTOR_PLUM;
-			default:
-				throw new IllegalArgumentException();
-			}
-		}
 
+			throw new IllegalArgumentException();
+		}
 	}
 
 	// Checks all of the players to see if they already have that Character
@@ -337,11 +360,49 @@ public class Board {
 			System.out.println("That door is not available");
 		}
 		if (move.startsWith("accuse")) {
+			// TODO
 			return 12;
 			// checks if the player has won, return a special integer based on
 			// outcome for playGame() to deal with
 		}
 		if (move.startsWith("suggest")) {
+			// TODO
+			BufferedReader input = new BufferedReader(new InputStreamReader(
+					System.in));
+			try {
+				// Initates the suggestion
+				// Reads in the
+				System.out.println("Who do you think did it?");
+				Character suggestedCharacter = Character.toEnum(input
+						.readLine());
+				System.out.println("What did they use?");
+				Weapon suggestedWeapon = Weapon.toEnum(input.readLine());
+				Room suggestedRoom = player.getLocation().getRoom();
+
+				// Moves the suggested player to the current room
+				if (suggestedRoom == null)
+					throw new IllegalArgumentException();
+				for (Player p : players) {
+					if (p.getCharacter() == suggestedCharacter && p.getLocation().getRoom() != suggestedRoom) {
+						p.moveRoom(suggestedRoom);
+						break;
+					}
+				}
+				for(Player p : players){
+					boolean foundSuggestion = false;
+					//TODO
+						
+				}
+			} catch (IllegalArgumentException e) {
+				System.out
+						.println("Sorry, that is not an option. Maybe you spelt it wrong.");
+				e.printStackTrace();
+			} catch (IOException e) {
+				System.out
+						.println("Sorry, something seems to have gone wrong.");
+				e.printStackTrace();
+			}
+
 			// compare every players hand with the suggestion and if found,
 			// print out that it has been
 			return 12;
@@ -349,8 +410,9 @@ public class Board {
 		System.out.println("Your available moves are:\n");
 		return 0;
 	}
-	
-	public String drawBoard(){
+
+	public String drawBoard() {
+		// TODO
 		return null;
 	}
 
