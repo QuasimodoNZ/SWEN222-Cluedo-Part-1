@@ -6,15 +6,25 @@ public class Player {
 	private List<Board.Weapon> weaponCards;
 	private List<Board.RoomName> roomCards;
 	private List<Board.Character> characterCards;
+	private boolean isControlled;
 
-	public Player(Board.Character character) {
+	public Player(Board.Character character, boolean iC) {
 		this.character = character;
 		this.weaponCards = new LinkedList<Board.Weapon>();
 		this.roomCards = new LinkedList<Board.RoomName>();
 		this.characterCards = new LinkedList<Board.Character>();
-
+		isControlled = iC;
 	}
-
+	
+	
+/**
+ * Returns whether this player is controlled by a player or not.
+ * @return
+ */
+	public boolean isControlled(){
+		return isControlled;
+	}
+	
 	/**
 	 * Returns the location that this player is on
 	 * 
@@ -55,5 +65,13 @@ public class Player {
 	public void moveLocation(Location nextLocation) {
 		location.setCharacter(null);
 		location = nextLocation;
+	}
+
+	public void moveRoom(Room suggestedRoom) {
+		for(Location l : suggestedRoom.getLocations()){
+			if(l.getCharacter()!=null)
+				moveLocation(l);
+			return;
+		}
 	}
 }
