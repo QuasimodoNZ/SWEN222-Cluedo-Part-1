@@ -349,6 +349,10 @@ public class Board {
 		System.out.println("Your available moves are:\n");
 		return 0;
 	}
+	
+	public String drawBoard(){
+		return null;
+	}
 
 	public static void main(String[] args) {
 		Board board = new Board();
