@@ -150,7 +150,7 @@ public class Board {
 			case JACOB_GREEN:
 				return "Jacob Green";
 			case ELEANOR_PEACOCK:
-				return "Eleanor Peackock";
+				return "Eleanor Peacock";
 			case VICTOR_PLUM:
 				return "Victor Plum";
 			default:
@@ -169,13 +169,13 @@ public class Board {
 
 		public static Character toEnum(String name)
 				throws IllegalArgumentException {
-			if (name.equals("kasandra scarlett"))
+			if (name.equals("kassandra scarlett"))
 				return Character.KASSANDRA_SCARLETT;
 			if (name.equals("jack mustard"))
 				return Character.JACK_MUSTARD;
-			if (name.equals("diane white"))
+			if (name.equals("diana white"))
 				return Character.DIANA_WHITE;
-			if (name.equals("jacob white"))
+			if (name.equals("jacob green"))
 				return Character.JACOB_GREEN;
 			if (name.equals("eleanor peacock"))
 				return Character.ELEANOR_PEACOCK;
@@ -200,7 +200,7 @@ public class Board {
 	 *********** Board Constructor ***********
 	 */
 	public Board() {
-		locations = new Location[25][25];
+		locations = newBoard();
 		players = new LinkedList<Player>();
 		List<Weapon> weaponCards = Weapon.toList();
 		List<RoomName> roomCards = RoomName.toList();
@@ -227,15 +227,17 @@ public class Board {
 				// Links players to characters
 				while (num > 0) {
 					System.out.println("Enter Player " + num + "'s character:");
-					String name = inputReader.next().toLowerCase();
+					String name = inputReader.nextLine().toLowerCase();
 					try {
 						Character character = Character.toEnum(name);
 						if (unselected(character)) {
 							Player p = new Player(character, true);
 							players.add(p);
+							num--;
 						}
 					} catch (IllegalArgumentException e) {
-						System.out.println("Invalid Character Name");
+						System.out.println(name
+								+ " is an invalid Character Name");
 					}
 
 				}
@@ -285,6 +287,21 @@ public class Board {
 				break;
 			}
 		}
+	}
+
+	private Location[][] newBoard() {
+		Location[][] board = new Location[25][25];
+
+		for (int x = 0; x < board.length; x++)
+			for (int y = 0; y < board.length; y++)
+				board[x][y] = new Location(new Point(x, y), null);
+
+		RoomName room = RoomName.SPA;
+		// TODO fill the board with the proper locations, it will usually
+		// consist of the room and then the loops through the locations and/or
+		// the specific locations
+
+		return board;
 	}
 
 	public String getOptions(Player player) {
@@ -574,7 +591,8 @@ public class Board {
 
 	public static void main(String[] args) {
 		Board board = new Board();
-		board.playGame();
+		board.drawBoard();
+		// board.playGame();
 	}
 
 	private class GameWonException extends Exception {
