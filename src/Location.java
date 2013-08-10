@@ -77,7 +77,7 @@ public class Location {
 	public String toString() {
 		if (character != null)
 			return "" + character.toString().charAt(0);
-		else if (room !=null)
+		else if (room != null)
 			return "R";
 		else if (doors.size() > 0)
 			return "D";

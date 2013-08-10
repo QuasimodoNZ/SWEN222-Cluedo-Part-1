@@ -110,6 +110,29 @@ public class Board {
 		public static List<RoomName> toList() {
 			return new LinkedList<RoomName>(Arrays.asList(RoomName.values()));
 		}
+
+		public static RoomName toEnum(String name) {
+			if (name.equals("spa"))
+				return SPA;
+			if (name.equals("theatre"))
+				return THEATRE;
+			if (name.equals("observatory"))
+				return OBSERVATORY;
+			if (name.equals("patio"))
+				return PATIO;
+			if (name.equals("swimming pool"))
+				return SWIMMING_POOL;
+			if (name.equals("hall"))
+				return HALL;
+			if (name.equals("kitchen"))
+				return KITCHEN;
+			if (name.equals("dining room"))
+				return DINING_ROOM;
+			if (name.equals("guest house"))
+				return GUEST_HOUSE;
+
+			throw new IllegalArgumentException();
+		}
 	}
 
 	// The characters available to play
@@ -281,17 +304,29 @@ public class Board {
 	 */
 	public void playGame() {
 		Scanner inputReader = new Scanner(System.in);
-		while (players.size() > 1) {
-			for (Player player : players) {
-				int movesLeft = 1 + (int) (Math.random() * 12);
-				while (movesLeft > 0) {
-					System.out.println(getOptions(player));
-					if (inputReader.hasNext()) {// needs to check outcome of an
-												// accuse
-						movesLeft -= playTurn(player, inputReader.next());
+		try {
+			while (true) {
+
+				for (Player player : players) {
+					// only asks a human controlled player for input
+					if (player.isControlled()) {
+						// Rolls the dice
+						int movesLeft = 1 + (int) (Math.random() * 12);
+						while (movesLeft > 0) {
+							System.out.println(getOptions(player));
+							if (inputReader.hasNext()) {// needs to check
+														// outcome of
+														// an
+														// accuse
+								movesLeft -= playTurn(player,
+										inputReader.next());
+							}
+						}
 					}
 				}
 			}
+		} catch (GameWonException e) {
+			System.out.println(e.getMessage());
 		}
 		inputReader.close();
 	}
@@ -348,7 +383,7 @@ public class Board {
 	 * @param move
 	 * @return
 	 */
-	private int playTurn(Player player, String move) {
+	private int playTurn(Player player, String move) throws GameWonException {
 		if (move.startsWith("move")) {
 			Location nextLocation = move(player, move.substring(4).trim());
 			if (nextLocation != null) {
@@ -376,7 +411,45 @@ public class Board {
 			System.out.println("That door is not available");
 		}
 		if (move.startsWith("accuse")) {
-			// TODO
+			BufferedReader input = new BufferedReader(new InputStreamReader(
+					System.in));
+
+			try {
+				System.out.println("Who do you think did it?");
+				Character character = Character.toEnum(input.readLine());
+				System.out.println("What did they use?");
+				Weapon weapon = Weapon.toEnum(input.readLine());
+				System.out.println("Where did they do it?");
+
+				RoomName room = RoomName.toEnum(input.readLine());
+				if (room == roomSolution && weapon == weaponSolution
+						&& character == characterSolution) {
+					throw new GameWonException(player.toString()
+							+ " has won the game!");
+				} else {
+					// TODO if there is not enough players to continue the game,
+					// it needs to declare the remaining player as the winner
+					System.out
+							.println(player.toString()
+									+ " made a wrong accusation and has been kicked from the game\nThese are his cards\nCharacter's\n");
+					for (Character c : player.getCharacterCards())
+						System.out.println(c.toString());
+					System.out.println("Room's\n");
+					for (RoomName rn : player.getRoomCards())
+						System.out.println(rn.toString());
+					System.out.println("Weapon's\n");
+					for (Weapon w : player.getWeaponCards())
+						System.out.println(w.toString());
+					player.setControl(false);
+				}
+			} catch (IOException e) {
+				System.out.println("Sorry, something has gone wrong.");
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				System.out
+						.println("Sorry, that is not an option. Maybe you spelt it wrong.");
+				e.printStackTrace();
+			}
 
 			return 12;
 			// checks if the player has won, return a special integer based on
@@ -502,5 +575,15 @@ public class Board {
 	public static void main(String[] args) {
 		Board board = new Board();
 		board.playGame();
+	}
+
+	private class GameWonException extends Exception {
+		public GameWonException() {
+			super();
+		}
+
+		public GameWonException(String message) {
+			super(message);
+		}
 	}
 }

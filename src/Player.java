@@ -15,16 +15,16 @@ public class Player {
 		this.characterCards = new LinkedList<Board.Character>();
 		isControlled = iC;
 	}
-	
-	
-/**
- * Returns whether this player is controlled by a player or not.
- * @return
- */
-	public boolean isControlled(){
+
+	/**
+	 * Returns whether this player is controlled by a player or not.
+	 * 
+	 * @return
+	 */
+	public boolean isControlled() {
 		return isControlled;
 	}
-	
+
 	/**
 	 * Returns the location that this player is on
 	 * 
@@ -68,10 +68,19 @@ public class Player {
 	}
 
 	public void moveRoom(Room suggestedRoom) {
-		for(Location l : suggestedRoom.getLocations()){
-			if(l.getCharacter()!=null)
+		for (Location l : suggestedRoom.getLocations()) {
+			if (l.getCharacter() != null)
 				moveLocation(l);
 			return;
 		}
+	}
+
+	/**
+	 * Sets the state of whether this player is controlled or not.
+	 * 
+	 * @param b
+	 */
+	public void setControl(boolean b) {
+		isControlled = false;
 	}
 }
