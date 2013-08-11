@@ -2,7 +2,7 @@ import java.util.*;
 
 public class Player {
 	private Board.Character character;
-	private Location location;
+	private Location location = null;
 	private List<Board.Weapon> weaponCards;
 	private List<Board.RoomName> roomCards;
 	private List<Board.Character> characterCards;
@@ -63,7 +63,8 @@ public class Player {
 	 * @param nextLocation
 	 */
 	public void moveLocation(Location nextLocation) {
-		location.setCharacter(null);
+		if (location != null)
+			location.setCharacter(null);
 		location = nextLocation;
 	}
 
