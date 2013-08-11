@@ -644,7 +644,7 @@ public class Board {
 						}
 						// Rolls the dice
 						int movesLeft = 2 + (int) (Math.random() * 11);
-						while (movesLeft > 0) {
+						while (movesLeft >= 0) {
 							drawBoard();
 							System.out
 									.printf("%s turn with %d turns left\nYour available moves are:\n",
