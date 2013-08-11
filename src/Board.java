@@ -255,6 +255,7 @@ public class Board {
 							throw new IllegalArgumentException("Invaild Player");
 						}
 					}
+					break;
 				} else {
 					throw new IllegalArgumentException("Invaild Number");
 				}
