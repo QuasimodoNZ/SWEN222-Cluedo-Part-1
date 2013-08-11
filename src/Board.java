@@ -296,12 +296,16 @@ public class Board {
 	private Location[][] newBoard() {
 		Location[][] board = new Location[27][29];
 
-		// Initalise room to be null
+		// Initialise room to be null
 		for (int x = 0; x < board.length; x++)
 			for (int y = 0; y < board[0].length; y++)
 				board[x][y] = new Location(new Point(x, y), null);
 
-		// The Spa room and its locations
+		// Intitialises all the rooms by marking the locations that are owned by
+		// this room, marking the locations that the players will be on when in
+		// the room and the doors within this room (not the passageways)
+
+		// The Spa
 		List<Location> roomLocations = new ArrayList<Location>(6);
 		Room room = new Room(RoomName.SPA, roomLocations);
 		for (int x = 0; x < 5; x++)
@@ -314,6 +318,12 @@ public class Board {
 			for (int y = 2; y < 5; y++)
 				roomLocations.add(board[x][y]);
 
+		List<Location> firstList = new LinkedList<Location>();
+		firstList.add(board[5][6]);
+		List<Location> secondList = new LinkedList<Location>();
+		secondList.addAll(board[4][5].getRoom().getLocations());
+		new Door("spa door", firstList, secondList);
+
 		// The Theatre and its locations
 		roomLocations = new ArrayList<Location>(6);
 		room = new Room(RoomName.THEATRE, roomLocations);
@@ -321,6 +331,12 @@ public class Board {
 		for (int x = 8; x < 13; x++)
 			for (int y = 0; y < 8; y++)
 				board[x][y] = new Location(new Point(x, y), room);
+
+		firstList = new LinkedList<Location>();
+		firstList.add(board[10][8]);
+		secondList = new LinkedList<Location>();
+		secondList.addAll(board[10][7].getRoom().getLocations());
+		new Door("theatre door", firstList, secondList);
 
 		// The Living Room
 		roomLocations = new ArrayList<Location>(6);
@@ -336,6 +352,12 @@ public class Board {
 			for (int y = 3; y < 5; y++)
 				roomLocations.add(board[x][y]);
 
+		firstList = new LinkedList<Location>();
+		firstList.add(board[16][9]);
+		secondList = new LinkedList<Location>();
+		secondList.addAll(board[16][8].getRoom().getLocations());
+		new Door("living room door", firstList, secondList);
+
 		// The Observatory
 		roomLocations = new ArrayList<Location>(6);
 		room = new Room(RoomName.OBSERVATORY, roomLocations);
@@ -346,6 +368,12 @@ public class Board {
 		for (int x = 23; x < 25; x++)
 			for (int y = 3; y < 6; y++)
 				roomLocations.add(board[x][y]);
+
+		firstList = new LinkedList<Location>();
+		firstList.add(board[21][8]);
+		secondList = new LinkedList<Location>();
+		secondList.addAll(board[22][8].getRoom().getLocations());
+		new Door("observatory door", firstList, secondList);
 
 		// The Patio
 		roomLocations = new ArrayList<Location>(6);
@@ -361,6 +389,21 @@ public class Board {
 			for (int y = 13; y < 15; y++)
 				roomLocations.add(board[x][y]);
 
+		firstList = new LinkedList<Location>();
+		firstList.add(board[5][10]);
+		secondList = new LinkedList<Location>();
+		secondList.addAll(board[4][14].getRoom().getLocations());
+		new Door("north patio door", firstList, secondList);
+		firstList = new LinkedList<Location>();
+		firstList.add(board[8][12]);
+		new Door("northeast patio door", firstList, secondList);
+		firstList = new LinkedList<Location>();
+		firstList.add(board[8][16]);
+		new Door("southeast patio door", firstList, secondList);
+		firstList = new LinkedList<Location>();
+		firstList.add(board[5][18]);
+		new Door("south patio door", firstList, secondList);
+
 		// The Swimming Pool
 		roomLocations = new ArrayList<Location>(6);
 		room = new Room(RoomName.SWIMMING_POOL, roomLocations);
@@ -372,6 +415,18 @@ public class Board {
 			for (int y = 13; y < 15; y++)
 				roomLocations.add(board[x][y]);
 
+		firstList = new LinkedList<Location>();
+		firstList.add(board[14][10]);
+		secondList = new LinkedList<Location>();
+		secondList.addAll(board[14][14].getRoom().getLocations());
+		new Door("north swimming pool door", firstList, secondList);
+		firstList = new LinkedList<Location>();
+		firstList.add(board[10][17]);
+		new Door("southwest swimming pool door", firstList, secondList);
+		firstList = new LinkedList<Location>();
+		firstList.add(board[17][17]);
+		new Door("southeast swimming pool door", firstList, secondList);
+
 		// The Hall
 		roomLocations = new ArrayList<Location>(6);
 		room = new Room(RoomName.HALL, roomLocations);
@@ -382,6 +437,15 @@ public class Board {
 		for (int x = 22; x < 24; x++)
 			for (int y = 14; y < 16; y++)
 				roomLocations.add(board[x][y]);
+
+		firstList = new LinkedList<Location>();
+		firstList.add(board[22][10]);
+		secondList = new LinkedList<Location>();
+		secondList.addAll(board[22][14].getRoom().getLocations());
+		new Door("north hall door", firstList, secondList);
+		firstList = new LinkedList<Location>();
+		firstList.add(board[18][14]);
+		new Door("west hall door", firstList, secondList);
 
 		// The Kitchen
 		roomLocations = new ArrayList<Location>(6);
@@ -395,6 +459,12 @@ public class Board {
 		for (int x = 2; x < 5; x++)
 			for (int y = 24; y < 26; y++)
 				roomLocations.add(board[x][y]);
+
+		firstList = new LinkedList<Location>();
+		firstList.add(board[6][21]);
+		secondList = new LinkedList<Location>();
+		secondList.addAll(board[6][22].getRoom().getLocations());
+		new Door("kitchen door", firstList, secondList);
 
 		// The Dining Room
 		roomLocations = new ArrayList<Location>(6);
@@ -411,6 +481,15 @@ public class Board {
 			for (int y = 22; y < 25; y++)
 				roomLocations.add(board[x][y]);
 
+		firstList = new LinkedList<Location>();
+		firstList.add(board[12][18]);
+		secondList = new LinkedList<Location>();
+		secondList.addAll(board[12][22].getRoom().getLocations());
+		new Door("north dining room door", firstList, secondList);
+		firstList = new LinkedList<Location>();
+		firstList.add(board[16][21]);
+		new Door("east dining room door", firstList, secondList);
+
 		// The Guest House
 		roomLocations = new ArrayList<Location>(6);
 		room = new Room(RoomName.DINING_ROOM, roomLocations);
@@ -422,6 +501,28 @@ public class Board {
 		for (int x = 23; x < 25; x++)
 			for (int y = 23; y < 26; y++)
 				roomLocations.add(board[x][y]);
+
+		// TODO need to change the null so that it knows its in the hallway
+		board[20][20] = new Location(new Point(20, 20), null);
+
+		firstList = new LinkedList<Location>();
+		firstList.add(board[20][20]);
+		secondList = new LinkedList<Location>();
+		secondList.addAll(board[22][22].getRoom().getLocations());
+		new Door("guest house door", firstList, secondList);
+
+		// Secret passage way between the spa and guest house
+		firstList = new LinkedList<Location>();
+		firstList.addAll(board[4][5].getRoom().getLocations());
+		secondList = new LinkedList<Location>();
+		secondList.addAll(board[22][22].getRoom().getLocations());
+		new Door("secret passageway", firstList, secondList);
+
+		firstList = new LinkedList<Location>();
+		firstList.addAll(board[22][8].getRoom().getLocations());
+		secondList = new LinkedList<Location>();
+		secondList.addAll(board[6][22].getRoom().getLocations());
+		new Door("secret passageway", firstList, secondList);
 
 		// TODO fill the board with the proper locations, it will usually
 		// consist of the room and then the loops through the locations
