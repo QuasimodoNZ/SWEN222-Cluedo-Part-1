@@ -188,6 +188,25 @@ public class Board {
 
 			throw new IllegalArgumentException();
 		}
+
+		public String toBoardString() {
+			switch (this) {
+			case JACK_MUSTARD:
+				return "Y";
+			case KASSANDRA_SCARLETT:
+				return "R";
+			case DIANA_WHITE:
+				return "W";
+			case JACOB_GREEN:
+				return "G";
+			case ELEANOR_PEACOCK:
+				return "B";
+			case VICTOR_PLUM:
+				return "P";
+			default:
+				throw new IllegalArgumentException();
+			}
+		}
 	}
 
 	// Checks all of the players to see if they already have that Character
@@ -204,7 +223,6 @@ public class Board {
 	 *********** Board Constructor ***********
 	 */
 	public Board() {
-		locations = newBoard();
 		players = new LinkedList<Player>();
 		List<Weapon> weaponCards = Weapon.toList();
 		List<RoomName> roomCards = RoomName.toList();
@@ -291,6 +309,7 @@ public class Board {
 				break;
 			}
 		}
+		locations = newBoard();
 	}
 
 	private Location[][] newBoard() {
@@ -518,16 +537,34 @@ public class Board {
 		secondList.addAll(board[22][22].getRoom().getLocations());
 		new Door("secret passageway", firstList, secondList);
 
+		// Secret passage way between the observatory and kitchen
 		firstList = new LinkedList<Location>();
 		firstList.addAll(board[22][8].getRoom().getLocations());
 		secondList = new LinkedList<Location>();
 		secondList.addAll(board[6][22].getRoom().getLocations());
 		new Door("secret passageway", firstList, secondList);
 
-		// TODO fill the board with the proper locations, it will usually
-		// consist of the room and then the loops through the locations
-		// and/or
-		// the specific locations
+		for (Player p : players)
+			switch (p.getCharacter()) {
+			case JACK_MUSTARD:
+				p.moveLocation(board[7][28]);
+				break;
+			case KASSANDRA_SCARLETT:
+				p.moveLocation(board[18][28]);
+				break;
+			case DIANA_WHITE:
+				p.moveLocation(board[0][19]);
+				break;
+			case JACOB_GREEN:
+				p.moveLocation(board[0][9]);
+				break;
+			case ELEANOR_PEACOCK:
+				p.moveLocation(board[6][0]);
+				break;
+			case VICTOR_PLUM:
+				p.moveLocation(board[20][0]);
+				break;
+			}
 
 		return board;
 	}

@@ -76,7 +76,7 @@ public class Location {
 	@Override
 	public String toString() {
 		if (character != null)
-			return "" + character.toString().charAt(0);
+			return "" + character.toBoardString();
 		else if (room != null)
 			return "X";
 		else if (doors.size() > 0)

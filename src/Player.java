@@ -50,12 +50,6 @@ public class Player {
 		return characterCards;
 	}
 
-	public String presentOptions(String options) {
-		// TODO Finish Method
-		String option = null;
-		return option;
-	}
-
 	/**
 	 * Removes its current location's reference to the player and moves it to
 	 * the specified location
@@ -66,6 +60,7 @@ public class Player {
 		if (location != null)
 			location.setCharacter(null);
 		location = nextLocation;
+		nextLocation.setCharacter(character);
 	}
 
 	public void moveRoom(Room suggestedRoom) {
