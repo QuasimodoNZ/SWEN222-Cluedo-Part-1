@@ -941,7 +941,7 @@ public class Board {
 	}
 
 	public List<Player> getPlayers() {
-		return this.getPlayers();
+		return this.players;
 	}
 
 	public static void main(String[] args) {
