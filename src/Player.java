@@ -79,4 +79,8 @@ public class Player {
 	public void setControl(boolean b) {
 		isControlled = false;
 	}
+	
+	public String toString(){
+		return character.toString();
+	}
 }

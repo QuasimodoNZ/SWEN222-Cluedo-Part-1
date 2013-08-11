@@ -574,39 +574,32 @@ public class Board {
 			// The player is in the Hallway
 			if (movesLeft > 0) {
 				if (move(player, "north") != null) {
-					options = options + "Move North\n";
+					options = options + "\tMove North\n";
 				}
 				if (move(player, "east") != null) {
-					options = options + "Move East\n";
+					options = options + "\tMove East\n";
 				}
 				if (move(player, "south") != null) {
-					options = options + "Move South\n";
+					options = options + "\tMove South\n";
 				}
 				if (move(player, "west") != null) {
-					options = options + "Move West\n";
-				}
-			}
-		} else {
-			// The player is inside another room
-			if (room.toString().equals(RoomName.SWIMMING_POOL.toString()))
-				options += "Accuse\n";
-			else
-				options += "Hypothesis";
-			if (movesLeft > 0) {
-				for (Door door : loc.getDoors()) {
-					if (door.getFirstList().contains(loc)) {
-						// Players location is inside the first list
-						options = options
-								+ door.getSecondList().get(0).toString();
-					} else {
-						// Players location is inside the second list
-						options = options
-								+ door.getFirstList().get(0).toString();
-					}
+					options = options + "\tMove West\n";
 				}
 			}
 		}
-		options = options + "End Turn\n";
+		if (movesLeft > 0 && loc.getDoors() != null) {
+			for (Door door : loc.getDoors())
+				options += "\t"+door.toString()+"\n";
+
+		}
+		if (room != null) {
+			// The player is inside another room
+			if (room.toString().equals(RoomName.SWIMMING_POOL.toString()))
+				options += "\tAccuse\n";
+			else
+				options += "\tHypothesis\n";
+		}
+		options = options + "\tEnd Turn\n";
 		return options;
 	}
 
@@ -626,6 +619,9 @@ public class Board {
 						int movesLeft = 1 + (int) (Math.random() * 12);
 						while (movesLeft > 0) {
 							drawBoard();
+							System.out
+									.printf("%s turn with %d turns left\nYour available moves are:\n",
+											player.toString(), movesLeft);
 							System.out.println(getOptions(player, movesLeft));
 							String move = inputReader.readLine();
 							movesLeft -= playTurn(player, move);
