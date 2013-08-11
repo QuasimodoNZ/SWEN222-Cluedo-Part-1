@@ -286,6 +286,12 @@ public class Board {
 	public void dealCards() {
 		List<Weapon> weaponCards = Weapon.toList();
 		List<RoomName> roomCards = RoomName.toList();
+		for (int i = 0; i < roomCards.size(); i++)
+			if (roomCards.get(i) == RoomName.SWIMMING_POOL) {
+				roomCards.remove(i);
+				break;
+			}
+
 		List<Character> characterCards = Character.toList();
 
 		Collections.shuffle(weaponCards);
@@ -299,25 +305,19 @@ public class Board {
 		// Loops through all the players adding cards until all the lists are
 		// empty
 		int i = 0;
-		while (true) {
-			if (i > players.size() - 1) {
-				i = 0;
-			}
-			if (!weaponCards.isEmpty()) {
-				players.get(i).getWeaponCards().add(weaponCards.remove(0));
-				i++;
-			} else if (!roomCards.isEmpty()) {
-				players.get(i).getRoomCards().add(roomCards.remove(0));
-				i++;
-			} else if (!characterCards.isEmpty()) {
-				players.get(i).getCharacterCards()
-						.add(characterCards.remove(0));
-				i++;
-			} else {
-				System.out.println("Cards dealt");
-				break;
-			}
-		}
+		while (true)
+			for (Player p : players)
+				if (p.isControlled()) {
+					if (weaponCards.size() > 0)
+						p.getWeaponCards().add(weaponCards.remove(0));
+					else if (characterCards.size() > 0)
+						p.getCharacterCards().add(characterCards.remove(0));
+					else if (roomCards.size() > 0)
+						p.getRoomCards().add(roomCards.remove(0));
+					else
+						return;
+				}
+
 	}
 
 	private Location[][] newBoard() {
@@ -620,12 +620,28 @@ public class Board {
 	public void playGame() {
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(
 				System.in));
+		boolean showedCards = false;
 		try {
 			while (true) {
 
 				for (Player player : players) {
 					// only asks a human controlled player for input
 					if (player.isControlled()) {
+
+						if (!showedCards) {
+							System.out
+									.println("Your cards are:\n\n- Characters:");
+							for (Character c : player.getCharacterCards())
+								System.out.println("\t" + c.toString());
+
+							System.out.println("\n- Rooms:");
+							for (RoomName r : player.getRoomCards())
+								System.out.println("\t" + r.toString());
+							System.out.println("\n- Weapons:");
+							for (Weapon w : player.getWeaponCards())
+								System.out.println("\t" + w.toString());
+
+						}
 						// Rolls the dice
 						int movesLeft = 2 + (int) (Math.random() * 11);
 						while (movesLeft > 0) {
@@ -640,6 +656,7 @@ public class Board {
 						}
 					}
 				}
+				showedCards = true;
 			}
 		} catch (GameWonException e) {
 			System.out.println(e.getMessage());
