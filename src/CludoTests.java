@@ -34,18 +34,14 @@ public class CludoTests {
 		assertEquals(b.getPlayers().get(0).toString(), new Player(
 				Board.Character.ELEANOR_PEACOCK, true).toString());
 	}
+
 	/*
-	@Test
-	public void testVaildStartBoard() {
-		Board b = new Board();
-		b.startBoard();
-		String line = "3\njack mustard\njacob green\nvictor plum";
-		InputStream input = new ByteArrayInputStream(line.getBytes() );
-		System.setIn(input);
-		List<Player> p = b.getPlayers();
-		assertTrue(p.size() == 6);
-	}
-	*/
+	 * @Test public void testVaildStartBoard() { Board b = new Board();
+	 * b.startBoard(); String line =
+	 * "3\njack mustard\njacob green\nvictor plum"; InputStream input = new
+	 * ByteArrayInputStream(line.getBytes() ); System.setIn(input); List<Player>
+	 * p = b.getPlayers(); assertTrue(p.size() == 6); }
+	 */
 	@Test
 	public void testValidMove() {
 		Board b = createBoard();
