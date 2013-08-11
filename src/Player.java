@@ -65,9 +65,10 @@ public class Player {
 
 	public void moveRoom(Room suggestedRoom) {
 		for (Location l : suggestedRoom.getLocations()) {
-			if (l.getCharacter() != null)
+			if (l.getCharacter() == null) {
 				moveLocation(l);
-			return;
+				return;
+			}
 		}
 	}
 
@@ -79,8 +80,8 @@ public class Player {
 	public void setControl(boolean b) {
 		isControlled = false;
 	}
-	
-	public String toString(){
+
+	public String toString() {
 		return character.toString();
 	}
 }

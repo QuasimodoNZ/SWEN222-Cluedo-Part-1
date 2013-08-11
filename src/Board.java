@@ -50,23 +50,23 @@ public class Board {
 		}
 
 		public static Weapon toEnum(String name) {
-			if (name.equals("rope"))
+			if (name.equalsIgnoreCase("rope"))
 				return ROPE;
-			if (name.equals("candlestick"))
+			if (name.equalsIgnoreCase("candlestick"))
 				return CANDLESTICK;
-			if (name.equals("knife"))
+			if (name.equalsIgnoreCase("knife"))
 				return KNIFE;
-			if (name.equals("pistol"))
+			if (name.equalsIgnoreCase("pistol"))
 				return PISTOL;
-			if (name.equals("baseball bat"))
+			if (name.equalsIgnoreCase("baseball bat"))
 				return BASEBALL_BAT;
-			if (name.equals("dumbbell"))
+			if (name.equalsIgnoreCase("dumbbell"))
 				return DUMBBELL;
-			if (name.equals("trophy"))
+			if (name.equalsIgnoreCase("trophy"))
 				return TROPHY;
-			if (name.equals("poison"))
+			if (name.equalsIgnoreCase("poison"))
 				return POISON;
-			if (name.equals("axe"))
+			if (name.equalsIgnoreCase("axe"))
 				return AXE;
 
 			throw new IllegalArgumentException();
@@ -83,6 +83,8 @@ public class Board {
 				return "Spa";
 			case THEATRE:
 				return "Theatre";
+			case LIVING_ROOM:
+				return "Living Room";
 			case OBSERVATORY:
 				return "Observatory";
 			case PATIO:
@@ -112,23 +114,23 @@ public class Board {
 		}
 
 		public static RoomName toEnum(String name) {
-			if (name.equals("spa"))
+			if (name.equalsIgnoreCase("spa"))
 				return SPA;
-			if (name.equals("theatre"))
+			if (name.equalsIgnoreCase("theatre"))
 				return THEATRE;
-			if (name.equals("observatory"))
+			if (name.equalsIgnoreCase("observatory"))
 				return OBSERVATORY;
-			if (name.equals("patio"))
+			if (name.equalsIgnoreCase("patio"))
 				return PATIO;
-			if (name.equals("swimming pool"))
+			if (name.equalsIgnoreCase("swimming pool"))
 				return SWIMMING_POOL;
-			if (name.equals("hall"))
+			if (name.equalsIgnoreCase("hall"))
 				return HALL;
-			if (name.equals("kitchen"))
+			if (name.equalsIgnoreCase("kitchen"))
 				return KITCHEN;
-			if (name.equals("dining room"))
+			if (name.equalsIgnoreCase("dining room"))
 				return DINING_ROOM;
-			if (name.equals("guest house"))
+			if (name.equalsIgnoreCase("guest house"))
 				return GUEST_HOUSE;
 
 			throw new IllegalArgumentException();
@@ -169,17 +171,17 @@ public class Board {
 
 		public static Character toEnum(String name)
 				throws IllegalArgumentException {
-			if (name.equals("kassandra scarlett"))
+			if (name.equalsIgnoreCase("kassandra scarlett"))
 				return Character.KASSANDRA_SCARLETT;
-			if (name.equals("jack mustard"))
+			if (name.equalsIgnoreCase("jack mustard"))
 				return Character.JACK_MUSTARD;
-			if (name.equals("diana white"))
+			if (name.equalsIgnoreCase("diana white"))
 				return Character.DIANA_WHITE;
-			if (name.equals("jacob green"))
+			if (name.equalsIgnoreCase("jacob green"))
 				return Character.JACOB_GREEN;
-			if (name.equals("eleanor peacock"))
+			if (name.equalsIgnoreCase("eleanor peacock"))
 				return Character.ELEANOR_PEACOCK;
-			if (name.equals("victor plum"))
+			if (name.equalsIgnoreCase("victor plum"))
 				return Character.VICTOR_PLUM;
 
 			throw new IllegalArgumentException();
@@ -236,6 +238,10 @@ public class Board {
 				continue;
 			}
 			// Adds human players
+			System.out.println("Choose from these players:");
+			for (Character c : Character.toList())
+				System.out.println("\t" + c.toString());
+			System.out.println();
 			while (num > 0) {
 				System.out.println("Enter Player " + num + "'s character:");
 				if (addPlayer(inputReader.nextLine().toLowerCase(), true)) {
@@ -250,7 +256,7 @@ public class Board {
 		if (players.size() < 6) {
 			// Adds the unused characters
 			for (Character c : Character.toList()) {
-				addPlayer(c.name(), false);
+				addPlayer(c.toString(), false);
 			}
 			System.out.println("Added Unused characters");
 		}
@@ -317,7 +323,6 @@ public class Board {
 	private Location[][] newBoard() {
 		Location[][] board = new Location[27][29];
 
-		// TODO change it to initialise to the hallway
 		// Initialise room to be null
 		for (int x = 0; x < board.length; x++)
 			for (int y = 0; y < board[0].length; y++)
@@ -475,7 +480,6 @@ public class Board {
 		for (int x = 0; x < 7; x++)
 			for (int y = 21; y < 29; y++)
 				board[x][y] = new Location(new Point(x, y), room);
-		// TODO need to change the null so that it knows its in the hallway
 		board[6][21] = new Location(new Point(6, 21), null);
 
 		for (int x = 2; x < 5; x++)
@@ -524,7 +528,6 @@ public class Board {
 			for (int y = 23; y < 26; y++)
 				roomLocations.add(board[x][y]);
 
-		// TODO need to change the null so that it knows its in the hallway
 		board[20][20] = new Location(new Point(20, 20), null);
 
 		firstList = new LinkedList<Location>();
@@ -605,7 +608,7 @@ public class Board {
 			if (room.toString().equals(RoomName.SWIMMING_POOL.toString()))
 				options += "\tAccuse\n";
 			else
-				options += "\tHypothesis\n";
+				options += "\tSuggest\n";
 		}
 		options = options + "\tEnd Turn\n";
 		return options;
@@ -716,18 +719,26 @@ public class Board {
 			}
 			System.out.println("That move is unavailable");
 		}
-		if (move.startsWith("accuse")) {
+		if (move.startsWith("accuse")
+				&& player.getLocation().getRoom().toString()
+						.equals("Swimming Pool")) {
 			BufferedReader input = new BufferedReader(new InputStreamReader(
 					System.in));
 
 			try {
 				System.out.println("Who do you think did it?");
+				for (Character c : Character.toList())
+					System.out.println("\t" + c.toString());
 				Character character = Character.toEnum(input.readLine());
 
 				System.out.println("What did they use?");
+				for (Weapon c : Weapon.toList())
+					System.out.println("\t" + c.toString());
 				Weapon weapon = Weapon.toEnum(input.readLine());
 
 				System.out.println("Where did they do it?");
+				for (RoomName c : RoomName.toList())
+					System.out.println("\t" + c.toString());
 				RoomName room = RoomName.toEnum(input.readLine());
 
 				if (room == roomSolution && weapon == weaponSolution
@@ -738,6 +749,7 @@ public class Board {
 					System.out
 							.println(player.toString()
 									+ " made a wrong accusation and has been kicked from the game");
+					player.setControl(false);
 
 					int numOfPlayersLeft = 0;
 					Player winningPlayer = null;
@@ -746,11 +758,11 @@ public class Board {
 							numOfPlayersLeft++;
 							winningPlayer = p;
 						}
-					if (numOfPlayersLeft == 0)
+					if (numOfPlayersLeft == 1)
 						throw new GameWonException(winningPlayer.toString()
 								+ " has won the game!");
 
-					System.out.println("These are his cards\nCharacter's\n");
+					System.out.println("These are their cards\nCharacter's\n");
 					for (Character c : player.getCharacterCards())
 						System.out.println(c.toString());
 					System.out.println("Room's\n");
@@ -759,22 +771,24 @@ public class Board {
 					System.out.println("Weapon's\n");
 					for (Weapon w : player.getWeaponCards())
 						System.out.println(w.toString());
-					player.setControl(false);
 				}
 			} catch (IOException e) {
 				System.out.println("Sorry, something has gone wrong.");
-				e.printStackTrace();
+				// e.printStackTrace();
+				return 0;
 			} catch (IllegalArgumentException e) {
 				System.out
 						.println("Sorry, that is not an option. Maybe you spelt it wrong.");
-				e.printStackTrace();
+				// e.printStackTrace();
+				return 0;
 			}
 
 			return 12;
 			// checks if the player has won, return a special integer based on
 			// outcome for playGame() to deal with
 		}
-		if (move.startsWith("suggest")) {
+		if (move.startsWith("suggest")
+				&& player.getLocation().getRoom() != null) {
 			BufferedReader input = new BufferedReader(new InputStreamReader(
 					System.in));
 			try {
@@ -889,23 +903,24 @@ public class Board {
 	}
 
 	public void drawBoard() {
+		String s = "";
 		for (int i = 0; i < locations.length; i++) {
-			System.out.print(" _");
+			s += " _";
 		}
-		System.out.println();
+		s += "\n";
 		for (int y = 0; y < locations[0].length; y++) {
 			for (int x = 0; x < locations.length; x++) {
 				if (x == 0) {
-					System.out.printf("|%s ", locations[x][y].toString());
+					s += String.format("|%s ", locations[x][y].toString());
 				} else if (x == locations.length - 1) {
-					System.out.printf("%s|", locations[x][y].toString());
+					s += String.format("%s|", locations[x][y].toString());
 				} else {
-					System.out.printf("%s ", locations[x][y].toString());
+					s += String.format("%s ", locations[x][y].toString());
 				}
 			}
-			System.out.println();
+			s += "\n";
 		}
-		System.out.println();
+		System.out.println(s);
 	}
 
 	public List<Player> getPlayers() {
