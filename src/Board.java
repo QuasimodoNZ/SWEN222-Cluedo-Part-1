@@ -244,7 +244,8 @@ public class Board {
 				if (3 <= num && num <= 6) {
 					// Links players to characters
 					while (num > 0) {
-						System.out.println("Enter Player " + num + "'s character:");
+						System.out.println("Enter Player " + num
+								+ "'s character:");
 						String name = inputReader.nextLine().toLowerCase();
 						Character character = Character.toEnum(name);
 						if (unselected(character)) {
@@ -259,10 +260,10 @@ public class Board {
 				} else {
 					throw new IllegalArgumentException("Invaild Number");
 				}
-			} 
+			}
 			inputReader.close();
 		} catch (IllegalArgumentException e) {
-			System.out.println("Bad Input: "+e);
+			System.out.println("Bad Input: " + e);
 		}
 
 		if (players.size() < 6) {
@@ -626,6 +627,8 @@ public class Board {
 						while (movesLeft > 0) {
 							drawBoard();
 							System.out.println(getOptions(player, movesLeft));
+							while (!inputReader.hasNext()) {
+							}
 							if (inputReader.hasNext()) {// needs to check
 														// outcome of
 														// an
