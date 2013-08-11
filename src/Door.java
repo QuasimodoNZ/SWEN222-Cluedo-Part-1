@@ -9,13 +9,11 @@ public class Door {
 
 	public Door(String n, List<Location> fl, List<Location> sl) {
 		name = n;
-		firstList = fl;// new LinkedList<Location>();
-		firstList.addAll(fl);
+		firstList = fl;
 		for (Location l : firstList)
 			l.addDoor(this);
 
-		secondList = sl;// new LinkedList<Location>();
-		secondList.addAll(sl);
+		secondList = sl;
 		for (Location l : secondList)
 			l.addDoor(this);
 	}

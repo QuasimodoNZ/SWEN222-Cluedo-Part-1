@@ -7,8 +7,7 @@ public class Room {
 
 	public Room(Board.RoomName rn, List<Location> locations) {
 		name = rn;
-		availableLocations = new LinkedList<Location>();
-		availableLocations.addAll(locations);
+		availableLocations = locations;
 	}
 
 	/**
