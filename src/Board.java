@@ -220,6 +220,9 @@ public class Board {
 	 */
 	public Board() {
 		players = new LinkedList<Player>();
+	}
+
+	public void startBoard() {
 		List<Weapon> weaponCards = Weapon.toList();
 		List<RoomName> roomCards = RoomName.toList();
 		List<Character> characterCards = Character.toList();
@@ -248,7 +251,7 @@ public class Board {
 			while (num > 0) {
 				System.out.println("Enter Player " + num + "'s character:");
 				String name = inputReader.nextLine().toLowerCase();
-				try{
+				try {
 					Character character = Character.toEnum(name);
 					if (unselected(character)) {
 						Player p = new Player(character, true);
@@ -588,7 +591,7 @@ public class Board {
 		}
 		if (movesLeft > 0 && loc.getDoors() != null) {
 			for (Door door : loc.getDoors())
-				options += "\t"+door.toString()+"\n";
+				options += "\t" + door.toString() + "\n";
 
 		}
 		if (room != null) {
@@ -904,7 +907,7 @@ public class Board {
 
 	public static void main(String[] args) {
 		Board board = new Board();
-		// board.drawBoard();
+		board.startBoard();
 		board.playGame();
 	}
 

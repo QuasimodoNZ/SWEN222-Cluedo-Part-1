@@ -48,7 +48,7 @@ public class CludoTests {
 		List<Location> locList = new ArrayList<Location>();
 		locList.add(p1Loc);
 		locList.add(p2Loc);
-		Room hallway = new Room(Board.RoomName.HALLWAY, locList);
+		//Room hallway = new Room(Board.RoomName.HALLWAY, locList);
 		return b;
 	}
 
