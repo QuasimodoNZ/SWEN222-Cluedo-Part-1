@@ -1,6 +1,8 @@
 import static org.junit.Assert.*;
 import java.awt.Point;
+import java.io.*;
 import java.util.*;
+
 import org.junit.Test;
 
 public class CludoTests {
@@ -32,15 +34,18 @@ public class CludoTests {
 		assertEquals(b.getPlayers().get(0).toString(), new Player(
 				Board.Character.ELEANOR_PEACOCK, true).toString());
 	}
-
+	/*
 	@Test
-	public void testInvaildGetOptions() {
-		Board b = createBoard();
-		Player p = b.getPlayers().get(0);
-		assertFalse(b.getOptions(p, 1).equals(
-				"Move North\nMove East\nMove South\nMove West\nEnd Turn\n"));
+	public void testVaildStartBoard() {
+		Board b = new Board();
+		b.startBoard();
+		String line = "3\njack mustard\njacob green\nvictor plum";
+		InputStream input = new ByteArrayInputStream(line.getBytes() );
+		System.setIn(input);
+		List<Player> p = b.getPlayers();
+		assertTrue(p.size() == 6);
 	}
-
+	*/
 	@Test
 	public void testValidMove() {
 		Board b = createBoard();
