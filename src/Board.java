@@ -75,7 +75,7 @@ public class Board {
 
 	// The Rooms in the game
 	public enum RoomName {
-		SPA, THEATRE, LIVING_ROOM, OBSERVATORY, PATIO, SWIMMING_POOL, HALL, KITCHEN, DINING_ROOM, GUEST_HOUSE;
+		SPA, THEATRE, LIVING_ROOM, OBSERVATORY, PATIO, SWIMMING_POOL, HALL, KITCHEN, DINING_ROOM, GUEST_HOUSE, HALLWAY;
 		@Override
 		public String toString() {
 			switch (this) {
@@ -97,6 +97,8 @@ public class Board {
 				return "Dining Room";
 			case GUEST_HOUSE:
 				return "Guest House";
+			case HALLWAY:
+				return "Hallway";
 			default:
 				throw new IllegalArgumentException();
 			}
@@ -130,6 +132,8 @@ public class Board {
 				return DINING_ROOM;
 			if (name.equals("guest house"))
 				return GUEST_HOUSE;
+			if (name.equals("hallway"))
+				return HALLWAY;
 
 			throw new IllegalArgumentException();
 		}
@@ -304,15 +308,62 @@ public class Board {
 		return board;
 	}
 
-	public String getOptions(Player player) {
+	public String getOptions(Player player, int movesLeft) {
 		// Gets the location of the current players character
 		// Location location = player.getLocation();
-
-		// Computes options of that location
-
-		// TODO Finish Method
-		String options = null;
-
+		String options = "";
+		Location loc = player.getLocation();
+		Room room = loc.getRoom();
+		if (room.toString().equals(RoomName.HALLWAY.toString())) {
+			// The player is in the Hallway
+			if (movesLeft > 0) {
+				if (move(player, "north") != null) {
+					options = options + "Move North\n";
+				}
+				if (move(player, "east") != null) {
+					options = options + "Move East\n";
+				}
+				if (move(player, "south") != null) {
+					options = options + "Move South\n";
+				}
+				if (move(player, "west") != null) {
+					options = options + "Move West\n";
+				}
+			}
+		} else if (room.toString().equals(RoomName.SWIMMING_POOL.toString())) {
+			// The player is inside the Swimming Pool
+			options = options + "Accuse\n";
+			if (movesLeft > 0) {
+				for (Door door : loc.getDoors()) {
+					if (door.getFirstList().contains(loc)) {
+						// Players location is inside the first list
+						options = options
+								+ door.getSecondList().get(0).toString();
+					} else {
+						// Players location is inside the second list
+						options = options
+								+ door.getFirstList().get(0).toString();
+					}
+				}
+			}
+		} else {
+			// The player is inside another room
+			options = options + "Hypothesis";
+			if (movesLeft > 0) {
+				for (Door door : loc.getDoors()) {
+					if (door.getFirstList().contains(loc)) {
+						// Players location is inside the first list
+						options = options
+								+ door.getSecondList().get(0).toString();
+					} else {
+						// Players location is inside the second list
+						options = options
+								+ door.getFirstList().get(0).toString();
+					}
+				}
+			}
+		}
+		options = options + "End Turn\n";
 		return options;
 	}
 
@@ -330,7 +381,7 @@ public class Board {
 						// Rolls the dice
 						int movesLeft = 1 + (int) (Math.random() * 12);
 						while (movesLeft > 0) {
-							System.out.println(getOptions(player));
+							System.out.println(getOptions(player, movesLeft));
 							if (inputReader.hasNext()) {// needs to check
 														// outcome of
 														// an
