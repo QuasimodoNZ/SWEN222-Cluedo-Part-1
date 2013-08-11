@@ -223,18 +223,6 @@ public class Board {
 	}
 
 	public void startBoard() {
-		List<Weapon> weaponCards = Weapon.toList();
-		List<RoomName> roomCards = RoomName.toList();
-		List<Character> characterCards = Character.toList();
-
-		Collections.shuffle(weaponCards);
-		Collections.shuffle(roomCards);
-		Collections.shuffle(characterCards);
-
-		weaponSolution = weaponCards.remove(0);
-		roomSolution = roomCards.remove(0);
-		characterSolution = characterCards.remove(0);
-
 		// Asks user for the number of players
 		System.out.println("Welcome to Cludo");
 		System.out.println("Please enter the number of players (3-6)");
@@ -247,21 +235,13 @@ public class Board {
 				System.out.println("Invaild player range");
 				continue;
 			}
-			// Links players to characters
+			// Adds human players
 			while (num > 0) {
 				System.out.println("Enter Player " + num + "'s character:");
-				String name = inputReader.nextLine().toLowerCase();
-				try {
-					Character character = Character.toEnum(name);
-					if (unselected(character)) {
-						Player p = new Player(character, true);
-						players.add(p);
-						num--;
-					} else {
-						System.out.println("Already Selected Character");
-					}
-				} catch (IllegalArgumentException e) {
-					System.out.println("Invaild Name");
+				if (addPlayer(inputReader.nextLine().toLowerCase(), true)){
+					num--;
+				} else {
+					System.out.println("Invalid Player Entry");
 				}
 			}
 			break;
@@ -269,20 +249,47 @@ public class Board {
 
 		if (players.size() < 6) {
 			// Adds the unused characters
-			boolean match = false;
 			for (Character c : Character.toList()) {
-				for (Player p : players) {
-					if (c.equals(p.getCharacter())) {
-						match = true;
-					}
-				}
-				if (!match) {
-					players.add(new Player(c, false));
-					match = false;
-				}
+				addPlayer(c.name(), false);
 			}
+			System.out.println("Added Unused characters");
 		}
+		
+		dealCards();
+		
+		locations = newBoard();
+	}
+	
+	public boolean addPlayer(String name, boolean iC){
+		try {
+			Character character = Character.toEnum(name);
+			if (unselected(character)) {
+				Player p = new Player(character, iC);
+				players.add(p);
+				System.out.println(character.name()+" Added");
+				return true;
+			} else {
+				return false;
+			}
+		} catch (IllegalArgumentException e) {
+			return false;
+		}
+		
+	}
+	
+	public void dealCards(){
+		List<Weapon> weaponCards = Weapon.toList();
+		List<RoomName> roomCards = RoomName.toList();
+		List<Character> characterCards = Character.toList();
 
+		Collections.shuffle(weaponCards);
+		Collections.shuffle(roomCards);
+		Collections.shuffle(characterCards);
+
+		weaponSolution = weaponCards.remove(0);
+		roomSolution = roomCards.remove(0);
+		characterSolution = characterCards.remove(0);
+		
 		// Loops through all the players adding cards until all the lists are
 		// empty
 		int i = 0;
@@ -305,7 +312,6 @@ public class Board {
 				break;
 			}
 		}
-		locations = newBoard();
 	}
 
 	private Location[][] newBoard() {

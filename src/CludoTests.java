@@ -16,8 +16,8 @@ public class CludoTests {
 	public void testInvaildGetOptions() {
 		Board b = createBoard();
 		Player p = b.getPlayers().get(0);
-		assertEquals(b.getOptions(p, 1),
-				"Move North\nMove East\nMove South\nMove West\nEnd Turn\n");
+		assertFalse(b.getOptions(p, 1).equals(
+				"Move North\nMove East\nMove South\nMove West\nEnd Turn\n"));
 	}
 
 	@Test
@@ -48,7 +48,7 @@ public class CludoTests {
 		List<Location> locList = new ArrayList<Location>();
 		locList.add(p1Loc);
 		locList.add(p2Loc);
-		//Room hallway = new Room(Board.RoomName.HALLWAY, locList);
+		// Room hallway = new Room(Board.RoomName.HALLWAY, locList);
 		return b;
 	}
 
