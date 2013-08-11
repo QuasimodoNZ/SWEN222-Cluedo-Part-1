@@ -78,11 +78,11 @@ public class Location {
 		if (character != null)
 			return "" + character.toString().charAt(0);
 		else if (room != null)
-			return "R";
+			return "X";
 		else if (doors.size() > 0)
 			return "D";
 		else
-			return "H";
+			return " ";
 	}
 
 	public Room getRoom() {

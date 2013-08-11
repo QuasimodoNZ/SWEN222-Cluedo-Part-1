@@ -290,15 +290,138 @@ public class Board {
 	}
 
 	private Location[][] newBoard() {
-		Location[][] board = new Location[25][25];
+		Location[][] board = new Location[27][29];
 
+		// Initalise room to be null
 		for (int x = 0; x < board.length; x++)
-			for (int y = 0; y < board.length; y++)
+			for (int y = 0; y < board[0].length; y++)
 				board[x][y] = new Location(new Point(x, y), null);
 
-		RoomName room = RoomName.SPA;
+		// The Spa room and its locations
+		List<Location> roomLocations = new ArrayList<Location>(6);
+		Room room = new Room(RoomName.SPA, roomLocations);
+		for (int x = 0; x < 5; x++)
+			for (int y = 0; y < 8; y++)
+				board[x][y] = new Location(new Point(x, y), room);
+		for (int y = 0; y < 6; y++)
+			board[5][y] = new Location(new Point(5, y), room);
+
+		for (int x = 2; x < 4; x++)
+			for (int y = 2; y < 5; y++)
+				roomLocations.add(board[x][y]);
+
+		// The Theatre and its locations
+		roomLocations = new ArrayList<Location>(6);
+		room = new Room(RoomName.THEATRE, roomLocations);
+
+		for (int x = 8; x < 13; x++)
+			for (int y = 0; y < 8; y++)
+				board[x][y] = new Location(new Point(x, y), room);
+
+		// The Living Room
+		roomLocations = new ArrayList<Location>(6);
+		room = new Room(RoomName.LIVING_ROOM, roomLocations);
+
+		for (int x = 14; x < 20; x++)
+			for (int y = 0; y < 8; y++)
+				board[x][y] = new Location(new Point(x, y), room);
+		for (int x = 15; x < 18; x++)
+			board[x][8] = new Location(new Point(x, 9), room);
+
+		for (int x = 15; x < 18; x++)
+			for (int y = 3; y < 5; y++)
+				roomLocations.add(board[x][y]);
+
+		// The Observatory
+		roomLocations = new ArrayList<Location>(6);
+		room = new Room(RoomName.OBSERVATORY, roomLocations);
+		for (int x = 22; x < 27; x++)
+			for (int y = 0; y < 9; y++)
+				board[x][y] = new Location(new Point(x, y), room);
+
+		for (int x = 23; x < 25; x++)
+			for (int y = 3; y < 6; y++)
+				roomLocations.add(board[x][y]);
+
+		// The Patio
+		roomLocations = new ArrayList<Location>(6);
+		room = new Room(RoomName.OBSERVATORY, roomLocations);
+		for (int x = 0; x < 4; x++)
+			for (int y = 10; y < 19; y++)
+				board[x][y] = new Location(new Point(x, y), room);
+		for (int x = 4; x < 8; x++)
+			for (int y = 11; y < 18; y++)
+				board[x][y] = new Location(new Point(x, y), room);
+
+		for (int x = 2; x < 5; x++)
+			for (int y = 13; y < 15; y++)
+				roomLocations.add(board[x][y]);
+
+		// The Swimming Pool
+		roomLocations = new ArrayList<Location>(6);
+		room = new Room(RoomName.SWIMMING_POOL, roomLocations);
+		for (int x = 10; x < 18; x++)
+			for (int y = 11; y < 17; y++)
+				board[x][y] = new Location(new Point(x, y), room);
+
+		for (int x = 13; x < 16; x++)
+			for (int y = 13; y < 15; y++)
+				roomLocations.add(board[x][y]);
+
+		// The Hall
+		roomLocations = new ArrayList<Location>(6);
+		room = new Room(RoomName.HALL, roomLocations);
+		for (int x = 19; x < 27; x++)
+			for (int y = 11; y < 18; y++)
+				board[x][y] = new Location(new Point(x, y), room);
+
+		for (int x = 22; x < 24; x++)
+			for (int y = 14; y < 16; y++)
+				roomLocations.add(board[x][y]);
+
+		// The Kitchen
+		roomLocations = new ArrayList<Location>(6);
+		room = new Room(RoomName.KITCHEN, roomLocations);
+		for (int x = 0; x < 7; x++)
+			for (int y = 21; y < 29; y++)
+				board[x][y] = new Location(new Point(x, y), room);
+		// TODO need to change the null so that it knows its in the hallway
+		board[6][21] = new Location(new Point(6, 21), null);
+
+		for (int x = 2; x < 5; x++)
+			for (int y = 24; y < 26; y++)
+				roomLocations.add(board[x][y]);
+
+		// The Dining Room
+		roomLocations = new ArrayList<Location>(6);
+		room = new Room(RoomName.DINING_ROOM, roomLocations);
+
+		for (int x = 9; x < 17; x++)
+			for (int y = 23; y < 29; y++)
+				board[x][y] = new Location(new Point(x, y), room);
+		for (int x = 10; x < 16; x++)
+			for (int y = 19; y < 23; y++)
+				board[x][y] = new Location(new Point(x, y), room);
+
+		for (int x = 12; x < 14; x++)
+			for (int y = 22; y < 25; y++)
+				roomLocations.add(board[x][y]);
+
+		// The Guest House
+		roomLocations = new ArrayList<Location>(6);
+		room = new Room(RoomName.DINING_ROOM, roomLocations);
+
+		for (int x = 20; x < 27; x++)
+			for (int y = 20; y < 29; y++)
+				board[x][y] = new Location(new Point(x, y), room);
+
+		for (int x = 23; x < 25; x++)
+			for (int y = 23; y < 26; y++)
+				roomLocations.add(board[x][y]);
+
 		// TODO fill the board with the proper locations, it will usually
-		// consist of the room and then the loops through the locations and/or
+		// consist of the room and then the loops through the locations
+		// and/or
 		// the specific locations
 
 		return board;
@@ -574,8 +697,8 @@ public class Board {
 			System.out.print(" _");
 		}
 		System.out.println();
-		for (int y = 0; y < locations.length; y++) {
-			for (int x = 0; x < locations[0].length; x++) {
+		for (int y = 0; y < locations[0].length; y++) {
+			for (int x = 0; x < locations.length; x++) {
 				if (x == 0) {
 					System.out.printf("|%s ", locations[x][y].toString());
 				} else if (x == locations.length - 1) {
