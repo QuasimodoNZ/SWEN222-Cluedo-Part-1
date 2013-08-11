@@ -220,6 +220,9 @@ public class Board {
 	 */
 	public Board() {
 		players = new LinkedList<Player>();
+	}
+
+	public void startBoard() {
 		List<Weapon> weaponCards = Weapon.toList();
 		List<RoomName> roomCards = RoomName.toList();
 		List<Character> characterCards = Character.toList();
@@ -905,7 +908,7 @@ public class Board {
 
 	public static void main(String[] args) {
 		Board board = new Board();
-		// board.drawBoard();
+		board.startBoard();
 		board.playGame();
 	}
 
