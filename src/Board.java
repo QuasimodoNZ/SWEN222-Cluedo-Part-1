@@ -626,6 +626,7 @@ public class Board {
 						// Rolls the dice
 						int movesLeft = 1 + (int) (Math.random() * 12);
 						while (movesLeft > 0) {
+							drawBoard();
 							System.out.println(getOptions(player, movesLeft));
 							if (inputReader.hasNext()) {// needs to check
 														// outcome of
@@ -664,12 +665,12 @@ public class Board {
 			return locations[point.x][point.y - 1];
 		}
 		if (direction.equalsIgnoreCase("south")) {
-			if (point.y == 24)
+			if (point.y == locations[0].length - 1)
 				return null;
 			return locations[point.x][point.y + 1];
 		}
 		if (direction.equalsIgnoreCase("east")) {
-			if (point.x == 24)
+			if (point.x == locations.length - 1)
 				return null;
 			return locations[point.x + 1][point.y];
 		}
@@ -904,8 +905,8 @@ public class Board {
 
 	public static void main(String[] args) {
 		Board board = new Board();
-		board.drawBoard();
-		// board.playGame();
+		// board.drawBoard();
+		board.playGame();
 	}
 
 	private class GameWonException extends Exception {
