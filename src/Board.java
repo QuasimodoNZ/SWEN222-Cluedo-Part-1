@@ -238,7 +238,7 @@ public class Board {
 			// Adds human players
 			while (num > 0) {
 				System.out.println("Enter Player " + num + "'s character:");
-				if (addPlayer(inputReader.nextLine().toLowerCase(), true)){
+				if (addPlayer(inputReader.nextLine().toLowerCase(), true)) {
 					num--;
 				} else {
 					System.out.println("Invalid Player Entry");
@@ -254,19 +254,19 @@ public class Board {
 			}
 			System.out.println("Added Unused characters");
 		}
-		
+
 		dealCards();
-		
+
 		locations = newBoard();
 	}
-	
-	public boolean addPlayer(String name, boolean iC){
+
+	public boolean addPlayer(String name, boolean iC) {
 		try {
 			Character character = Character.toEnum(name);
 			if (unselected(character)) {
 				Player p = new Player(character, iC);
 				players.add(p);
-				System.out.println(character.name()+" Added");
+				System.out.println(character.name() + " Added");
 				return true;
 			} else {
 				return false;
@@ -274,10 +274,10 @@ public class Board {
 		} catch (IllegalArgumentException e) {
 			return false;
 		}
-		
+
 	}
-	
-	public void dealCards(){
+
+	public void dealCards() {
 		List<Weapon> weaponCards = Weapon.toList();
 		List<RoomName> roomCards = RoomName.toList();
 		List<Character> characterCards = Character.toList();
@@ -289,7 +289,7 @@ public class Board {
 		weaponSolution = weaponCards.remove(0);
 		roomSolution = roomCards.remove(0);
 		characterSolution = characterCards.remove(0);
-		
+
 		// Loops through all the players adding cards until all the lists are
 		// empty
 		int i = 0;
