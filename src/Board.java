@@ -261,7 +261,6 @@ public class Board {
 					throw new IllegalArgumentException("Invaild Number");
 				}
 			}
-			inputReader.close();
 		} catch (IllegalArgumentException e) {
 			System.out.println("Bad Input: " + e);
 		}
@@ -615,7 +614,8 @@ public class Board {
 	 * Runs a game until a player wins
 	 */
 	public void playGame() {
-		Scanner inputReader = new Scanner(System.in);
+		BufferedReader inputReader = new BufferedReader(new InputStreamReader(
+				System.in));
 		try {
 			while (true) {
 
@@ -627,23 +627,19 @@ public class Board {
 						while (movesLeft > 0) {
 							drawBoard();
 							System.out.println(getOptions(player, movesLeft));
-							while (!inputReader.hasNext()) {
-							}
-							if (inputReader.hasNext()) {// needs to check
-														// outcome of
-														// an
-														// accuse
-								movesLeft -= playTurn(player,
-										inputReader.next());
-							}
+							String move = inputReader.readLine();
+							movesLeft -= playTurn(player, move);
+							// }
 						}
 					}
 				}
 			}
 		} catch (GameWonException e) {
 			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.print("The inputReader crashed");
+			e.printStackTrace();
 		}
-		inputReader.close();
 	}
 
 	/**
@@ -663,22 +659,29 @@ public class Board {
 		if (direction.equalsIgnoreCase("north")) {
 			if (point.y == 0)
 				return null;
-			return locations[point.x][point.y - 1];
+			Location next = locations[point.x][point.y - 1];
+			return (next.getRoom() != null) ? null : next;
 		}
 		if (direction.equalsIgnoreCase("south")) {
 			if (point.y == locations[0].length - 1)
 				return null;
-			return locations[point.x][point.y + 1];
+			Location next = locations[point.x][point.y + 1];
+			return (next.getRoom() != null) ? null : next;
+
 		}
 		if (direction.equalsIgnoreCase("east")) {
 			if (point.x == locations.length - 1)
 				return null;
-			return locations[point.x + 1][point.y];
+			Location next = locations[point.x + 1][point.y];
+			return (next.getRoom() != null) ? null : next;
+
 		}
 		if (direction.equalsIgnoreCase("west")) {
 			if (point.x == 0)
 				return null;
-			return locations[point.x - 1][point.y];
+			Location next = locations[point.x - 1][point.y];
+			return (next.getRoom() != null) ? null : next;
+
 		}
 
 		return null;
