@@ -75,7 +75,7 @@ public class Board {
 
 	// The Rooms in the game
 	public enum RoomName {
-		SPA, THEATRE, LIVING_ROOM, OBSERVATORY, PATIO, SWIMMING_POOL, HALL, KITCHEN, DINING_ROOM, GUEST_HOUSE, HALLWAY;
+		SPA, THEATRE, LIVING_ROOM, OBSERVATORY, PATIO, SWIMMING_POOL, HALL, KITCHEN, DINING_ROOM, GUEST_HOUSE;
 		@Override
 		public String toString() {
 			switch (this) {
@@ -97,8 +97,6 @@ public class Board {
 				return "Dining Room";
 			case GUEST_HOUSE:
 				return "Guest House";
-			case HALLWAY:
-				return "Hallway";
 			default:
 				throw new IllegalArgumentException();
 			}
@@ -132,8 +130,6 @@ public class Board {
 				return DINING_ROOM;
 			if (name.equals("guest house"))
 				return GUEST_HOUSE;
-			if (name.equals("hallway"))
-				return HALLWAY;
 
 			throw new IllegalArgumentException();
 		}
@@ -315,6 +311,7 @@ public class Board {
 	private Location[][] newBoard() {
 		Location[][] board = new Location[27][29];
 
+		// TODO change it to initialise to the hallway
 		// Initialise room to be null
 		for (int x = 0; x < board.length; x++)
 			for (int y = 0; y < board[0].length; y++)
@@ -575,7 +572,7 @@ public class Board {
 		String options = "";
 		Location loc = player.getLocation();
 		Room room = loc.getRoom();
-		if (room.toString().equals(RoomName.HALLWAY.toString())) {
+		if (room == null) {
 			// The player is in the Hallway
 			if (movesLeft > 0) {
 				if (move(player, "north") != null) {
@@ -591,25 +588,12 @@ public class Board {
 					options = options + "Move West\n";
 				}
 			}
-		} else if (room.toString().equals(RoomName.SWIMMING_POOL.toString())) {
-			// The player is inside the Swimming Pool
-			options = options + "Accuse\n";
-			if (movesLeft > 0) {
-				for (Door door : loc.getDoors()) {
-					if (door.getFirstList().contains(loc)) {
-						// Players location is inside the first list
-						options = options
-								+ door.getSecondList().get(0).toString();
-					} else {
-						// Players location is inside the second list
-						options = options
-								+ door.getFirstList().get(0).toString();
-					}
-				}
-			}
 		} else {
 			// The player is inside another room
-			options = options + "Hypothesis";
+			if (room.toString().equals(RoomName.SWIMMING_POOL.toString()))
+				options += "Accuse\n";
+			else
+				options += "Hypothesis";
 			if (movesLeft > 0) {
 				for (Door door : loc.getDoors()) {
 					if (door.getFirstList().contains(loc)) {
@@ -746,21 +730,34 @@ public class Board {
 			try {
 				System.out.println("Who do you think did it?");
 				Character character = Character.toEnum(input.readLine());
+
 				System.out.println("What did they use?");
 				Weapon weapon = Weapon.toEnum(input.readLine());
-				System.out.println("Where did they do it?");
 
+				System.out.println("Where did they do it?");
 				RoomName room = RoomName.toEnum(input.readLine());
+
 				if (room == roomSolution && weapon == weaponSolution
 						&& character == characterSolution) {
 					throw new GameWonException(player.toString()
 							+ " has won the game!");
 				} else {
-					// TODO if there is not enough players to continue the game,
-					// it needs to declare the remaining player as the winner
 					System.out
 							.println(player.toString()
-									+ " made a wrong accusation and has been kicked from the game\nThese are his cards\nCharacter's\n");
+									+ " made a wrong accusation and has been kicked from the game");
+
+					int numOfPlayersLeft = 0;
+					Player winningPlayer = null;
+					for (Player p : players)
+						if (p.isControlled()) {
+							numOfPlayersLeft++;
+							winningPlayer = p;
+						}
+					if (numOfPlayersLeft == 0)
+						throw new GameWonException(winningPlayer.toString()
+								+ " has won the game!");
+
+					System.out.println("These are his cards\nCharacter's\n");
 					for (Character c : player.getCharacterCards())
 						System.out.println(c.toString());
 					System.out.println("Room's\n");
