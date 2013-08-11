@@ -863,7 +863,7 @@ public class Board {
 		}
 
 		for (Door d : player.getLocation().getDoors())
-			if (d.toString().equals(move.substring(4).trim()))
+			if (d.toString().equals(move.trim()))
 				if (d.getFirstList().contains(player.getLocation())) {
 					for (Location l : d.getSecondList())
 						if (l.getCharacter() == null) {
