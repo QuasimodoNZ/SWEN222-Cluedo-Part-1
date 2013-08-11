@@ -239,37 +239,34 @@ public class Board {
 		// Asks user for the number of players
 		System.out.println("Welcome to Cludo");
 		System.out.println("Please enter the number of players (3-6)");
-		Scanner inputReader = new Scanner(System.in);
-
-		// Checks for valid input
-		if (inputReader.hasNextInt()) {
-			int num = inputReader.nextInt();
-			// Checks for a valid number
-			if (3 <= num && num <= 6) {
-				// Links players to characters
-				while (num > 0) {
-					System.out.println("Enter Player " + num + "'s character:");
-					String name = inputReader.nextLine().toLowerCase();
-					try {
+		try {
+			Scanner inputReader = new Scanner(System.in);
+			while (inputReader.hasNext()) {
+				int num = inputReader.nextInt();
+				inputReader.nextLine();
+				// Checks for a valid number
+				if (3 <= num && num <= 6) {
+					// Links players to characters
+					while (num > 0) {
+						System.out.println("Enter Player " + num + "'s character:");
+						String name = inputReader.nextLine().toLowerCase();
 						Character character = Character.toEnum(name);
 						if (unselected(character)) {
 							Player p = new Player(character, true);
 							players.add(p);
 							num--;
+						} else {
+							throw new IllegalArgumentException("Invaild Player");
 						}
-					} catch (IllegalArgumentException e) {
-						System.out.println(name
-								+ " is an invalid Character Name");
 					}
-
+				} else {
+					throw new IllegalArgumentException("Invaild Number");
 				}
-			} else {
-				System.out.println("Invalid number of players");
-			}
-		} else {
-			System.out.println("Invalid input");
+			} 
+			inputReader.close();
+		} catch (IllegalArgumentException e) {
+			System.out.println("Bad Input: "+e);
 		}
-		inputReader.close();
 
 		if (players.size() < 6) {
 			// Adds the unused characters
