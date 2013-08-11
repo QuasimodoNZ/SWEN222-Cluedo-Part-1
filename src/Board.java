@@ -399,7 +399,7 @@ public class Board {
 
 		// The Patio
 		roomLocations = new ArrayList<Location>(6);
-		room = new Room(RoomName.OBSERVATORY, roomLocations);
+		room = new Room(RoomName.PATIO, roomLocations);
 		for (int x = 0; x < 4; x++)
 			for (int y = 10; y < 19; y++)
 				board[x][y] = new Location(new Point(x, y), room);
@@ -514,7 +514,7 @@ public class Board {
 
 		// The Guest House
 		roomLocations = new ArrayList<Location>(6);
-		room = new Room(RoomName.DINING_ROOM, roomLocations);
+		room = new Room(RoomName.GUEST_HOUSE, roomLocations);
 
 		for (int x = 20; x < 27; x++)
 			for (int y = 20; y < 29; y++)
@@ -624,7 +624,7 @@ public class Board {
 					// only asks a human controlled player for input
 					if (player.isControlled()) {
 						// Rolls the dice
-						int movesLeft = 1 + (int) (Math.random() * 12);
+						int movesLeft = 2 + (int) (Math.random() * 11);
 						while (movesLeft > 0) {
 							drawBoard();
 							System.out
@@ -706,6 +706,8 @@ public class Board {
 	 * @return
 	 */
 	private int playTurn(Player player, String move) throws GameWonException {
+		if (move.equalsIgnoreCase("end turn"))
+			return 12;
 		if (move.startsWith("move")) {
 			Location nextLocation = move(player, move.substring(4).trim());
 			if (nextLocation != null) {
@@ -713,24 +715,6 @@ public class Board {
 				return 1;
 			}
 			System.out.println("That move is unavailable");
-		}
-		if (move.startsWith("door")) {
-			for (Door d : player.getLocation().getDoors())
-				if (d.toString().equals(move.substring(4).trim()))
-					if (d.getFirstList().contains(player.getLocation())) {
-						for (Location l : d.getSecondList())
-							if (l.getCharacter() == null) {
-								player.moveLocation(l);
-								return 1;
-							}
-					} else {
-						for (Location l : d.getFirstList())
-							if (l.getCharacter() == null) {
-								player.moveLocation(l);
-								return 1;
-							}
-					}
-			System.out.println("That door is not available");
 		}
 		if (move.startsWith("accuse")) {
 			BufferedReader input = new BufferedReader(new InputStreamReader(
@@ -883,6 +867,23 @@ public class Board {
 			// selected, granting the player another try
 			return 0;
 		}
+
+		for (Door d : player.getLocation().getDoors())
+			if (d.toString().equals(move.trim()))
+				if (d.getFirstList().contains(player.getLocation())) {
+					for (Location l : d.getSecondList())
+						if (l.getCharacter() == null) {
+							player.moveLocation(l);
+							return 1;
+						}
+				} else {
+					for (Location l : d.getFirstList())
+						if (l.getCharacter() == null) {
+							player.moveLocation(l);
+							return 1;
+						}
+				}
+		System.out.println("That door is not available");
 		System.out.println("Your available moves are:\n");
 		return 0;
 	}
