@@ -532,7 +532,7 @@ public class Board {
 	 * @param direction
 	 * @return
 	 */
-	private Location move(Player player, String direction) {
+	public Location move(Player player, String direction) {
 		Point point = player.getLocation().getPoint();
 
 		// returns the location in the direction specified
@@ -761,6 +761,10 @@ public class Board {
 			System.out.println();
 		}
 		System.out.println();
+	}
+	
+	public List<Player> getPlayers(){
+		return this.getPlayers();
 	}
 
 	public static void main(String[] args) {
