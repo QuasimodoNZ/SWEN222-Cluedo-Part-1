@@ -900,8 +900,8 @@ public class Board {
 		}
 		System.out.println();
 	}
-	
-	public List<Player> getPlayers(){
+
+	public List<Player> getPlayers() {
 		return this.getPlayers();
 	}
 
