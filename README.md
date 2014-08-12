@@ -1,7 +1,7 @@
 SWEN222_Cluedo
 ==============
 
-Test-based version of Cluedo for SWEN222
+Text-based version of Cluedo for SWEN222
 
 This project was created for SWEN222, it is the first part of two assignments
 that were to be created with a partner using a revision control system.
